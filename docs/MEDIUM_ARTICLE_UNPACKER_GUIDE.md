@@ -2,28 +2,31 @@
 
 **Extract and validate unpacked PE/ELF samples with real examples — and prove it using String Analyzer and File Metadata tools.**
 
+**📖 Published on Medium:** [Unpacker: A Practical Guide to Modular Malware Packer Detection and Unpacking](https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b)
+
 ---
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [What is Unpacker?](#what-is-unpacker)
-3. [Architecture at a Glance](#architecture-at-a-glance)
-4. [Detection: How the Tool Knows What’s Packed](#detection-how-the-tool-knows-whats-packed)
-5. [Unpackers: One Module per Packer](#unpackers-one-module-per-packer)
+2. [Git repository](#git-repository)
+3. [What is Unpacker?](#what-is-unpacker)
+4. [Architecture at a Glance](#architecture-at-a-glance)
+5. [Detection: How the Tool Knows What’s Packed](#detection-how-the-tool-knows-whats-packed)
+6. [Unpackers: One Module per Packer](#unpackers-one-module-per-packer)
    - [UPX](#upx)
    - [ASPack](#aspack)
    - [MPRESS](#mpress)
    - [Themida](#themida)
    - [VMProtect](#vmprotect)
    - [Generic](#generic)
-6. [Running the Pipeline](#running-the-pipeline)
-7. [Validating Unpacking: Why Proof Matters](#validating-unpacking-why-proof-matters)
-8. [Validation with String Analyzer](#validation-with-string-analyzer)
-9. [Validation with Basic File Information Gathering Script](#validation-with-basic-file-information-gathering-script)
-10. [End-to-End Workflow](#end-to-end-workflow)
-11. [Limitations and Tips](#limitations-and-tips)
-12. [Summary and References](#summary-and-references)
+7. [Running the Pipeline](#running-the-pipeline)
+8. [Validating Unpacking: Why Proof Matters](#validating-unpacking-why-proof-matters)
+9. [Validation with String Analyzer](#validation-with-string-analyzer)
+10. [Validation with Basic File Information Gathering Script](#validation-with-basic-file-information-gathering-script)
+11. [End-to-End Workflow](#end-to-end-workflow)
+12. [Limitations and Tips](#limitations-and-tips)
+13. [Summary and References](#summary-and-references)
 
 ---
 
@@ -37,6 +40,24 @@ Packed malware hides real code behind compression or encryption. To analyze beha
 - **[Basic File Information Gathering Script (fileinfo.py)](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de)** — hashes, PE/ELF metadata, packing heuristics, and deep static analysis.
 
 Both tools are **read-only** (no execution, no decompilation), so you can safely validate unpacked files in automation or air-gapped labs.
+
+---
+
+## Git repository
+
+The project is developed in the open and available on GitHub:
+
+- **Repository:** [https://github.com/anpa1200/Unpacker](https://github.com/anpa1200/Unpacker)
+- **Clone and install:**
+  ```bash
+  git clone https://github.com/anpa1200/Unpacker.git
+  cd Unpacker
+  pip install -e .
+  ```
+- **Run without install** (from project root):  
+  `python scripts/run_unpacker.py /path/to/sample.exe -o ./unpacked`
+
+The repo contains the full source (orchestrator, detector, unpackers), config, scripts, tests, and the in-repo version of this guide. Samples and unpacked results are not committed; use your own samples or the download script (see README) to fetch samples by packer type.
 
 ---
 
@@ -347,10 +368,10 @@ You can then diff or compare `report.json` for packed vs unpacked (e.g. section 
 
 **References**
 
+- **This article on Medium:** [Unpacker: A Practical Guide to Modular Malware Packer Detection and Unpacking](https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b)
+- **Unpacker (source code):** [https://github.com/anpa1200/Unpacker](https://github.com/anpa1200/Unpacker) — clone, install, and run from the repo; full README with examples and proofs is in the repository.
 - String Analyzer (Medium): [A Practical Guide to String Analyzer](https://medium.com/@1200km/a-practical-guide-to-string-analyzer-extract-and-analyze-strings-from-binaries-without-the-875dc74e4868)  
 - File metadata / static analysis (Medium): [One Tool to Rule Them All: File Metadata & Static Analysis for Malware Analysts and SOC Teams](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de)  
-- Tools installed at:  
-  - String Analyzer: `/home/andrey/git_project/String-Analyzer`  
-  - Basic File Information Gathering Script: `/home/andrey/git_project/Basic-File-Information-Gathering-Script`
+- Tools (example paths): String Analyzer and Basic File Information Gathering Script — see their repos/Medium articles for install locations; use them to validate unpacked output as shown above.
 
 If you’re building a malware triage or unpacking pipeline, Unpacker plus these two validation tools give you a reproducible, proof-based workflow from packed sample to validated unpacked file.
