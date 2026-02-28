@@ -1,0 +1,18 @@
+# Unpacker configuration
+
+detector:
+  confidence_threshold: 0.5
+  use_signatures: true
+  use_sections: true
+  use_entropy: true
+  use_heuristics: true
+  # signatures_dir: data/signatures
+
+orchestrator:
+  max_layers: 5
+  timeout_seconds: 300
+  rebuild_iat: true
+
+unpackers:
+  # Prefer native UPX when available
+  upx_prefer_native: true

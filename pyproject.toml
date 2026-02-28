@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unpacker"
+version = "0.1.0"
+description = "Modular malware packer detection and unpacking tool"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pefile>=2023.2.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+emulation = ["qiling>=1.4.5"]
+
+[project.scripts]
+unpacker = "unpacker.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
