@@ -14,7 +14,7 @@
 Packed malware hides real code behind compression or encryption. Unpacker:
 
 1. **Detects** the packer using section names, entropy, heuristics, and optional path/content hints (PE and ELF).
-2. **Dispatches** to the matching unpacker (UPX native; ASPack/Themida/VMProtect via [Unipacker](https://github.com/unipacker/unipacker) emulation).
+2. **Dispatches** to the matching unpacker (UPX native; ASPack/Themida/VMProtect via [Unipacker](https://github.com/unipacker/unipacker) for 32-bit, or [Qiling](https://github.com/qilingframework/qiling) for 64-bit VMProtect).
 3. **Outputs** an unpacked file you can analyze or validate with tools like [String Analyzer](https://github.com/anpa1200/String-Analyzer) and [Basic File Information Gathering Script](https://github.com/anpa1200/Basic-File-Information-Gathering-Script).
 
 One command, one pipeline; supports **multi-layer** unpacking (e.g. several VMProtect layers).
@@ -26,7 +26,7 @@ One command, one pipeline; supports **multi-layer** unpacking (e.g. several VMPr
 | Feature | Description |
 |--------|-------------|
 | **Multi-method detection** | Section names (UPX0/UPX1, .aspack, .vmp0, Themida, …), entropy, heuristics; PE + ELF. |
-| **Pluggable unpackers** | UPX (native `upx -d`), ASPack, Themida, VMProtect (Unipacker emulation), MPRESS/generic (stub). |
+| **Pluggable unpackers** | UPX (native), ASPack/Themida/VMProtect (Unipacker for PE32; Qiling for PE32+ VMProtect), MPRESS/generic (stub). |
 | **Path/content hints** | Samples in `.../vmprotect/` or `.../themida/` get the right unpacker even without section match. |
 | **Multi-layer** | Re-detect and unpack up to N layers (configurable). |
 | **Validation-friendly** | Output is static dumps; prove unpack with entropy/size/strings (see [Real-life example](#real-life-example-with-proof) below). |
@@ -55,7 +55,8 @@ pip install -e .
 ```
 
 - **UPX (for UPX unpacking):** install system UPX, e.g. `apt install upx-ucl` or [upx.github.io](https://upx.github.io/).
-- **ASPack / Themida / VMProtect:** `pip install unipacker`. On Python 3.12+ you may need `pip install 'setuptools<70'` for `pkg_resources`.
+- **ASPack / Themida / VMProtect (32-bit):** `pip install unipacker`. On Python 3.12+ you may need `pip install 'setuptools<70'` for `pkg_resources`.
+- **VMProtect (64-bit):** `pip install qiling` and set **QILING_ROOTFS** to a directory containing a Windows x64 rootfs (e.g. `x8664_windows` with DLLs). See [Qiling rootfs](https://github.com/qilingframework/rootfs). Optional: `pip install -e ".[emulation]"` to pull in Qiling.
 
 ---
 
@@ -198,7 +199,7 @@ The same content is in the repo as **[docs/MEDIUM_ARTICLE_UNPACKER_GUIDE.md](doc
 |-----------|--------|
 | Orchestrator, detector (sections, entropy, heuristics), dispatcher | Done |
 | UPX (native) | Done |
-| ASPack, Themida, VMProtect (Unipacker) | Done (PE32; may time out on heavy samples) |
+| ASPack, Themida, VMProtect (Unipacker / Qiling) | Done (PE32 via Unipacker; PE32+ VMProtect via Qiling when rootfs set) |
 | MPRESS, generic unpacker | Stub (detection only / error) |
 | PE rebuilder (IAT) | Stub |
 | Signature DB | Empty (optional) |

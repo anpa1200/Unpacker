@@ -133,6 +133,18 @@ def run_unipacker_emulation(
 ) -> UnpackResult:
     """Run Unipacker emulation on a PE; apply patch, then engine.emu(). Returns UnpackResult."""
     log: list[str] = []
+    # Unipacker supports only PE32 (32-bit). Reject PE32+ upfront with a clear message.
+    try:
+        from unpacker.detector.format_ import is_pe32_plus
+        if is_pe32_plus(sample_path):
+            return UnpackResult(
+                success=False,
+                log=log,
+                error="PE32+ (64-bit) is not supported by Unipacker. Only PE32 (32-bit) can be unpacked. Use a 32-bit sample or a 64-bit capable unpacker.",
+            )
+    except Exception:
+        pass
+
     try:
         from unipacker.core import Sample, UnpackerEngine, SimpleClient
         from unipacker.utils import InvalidPEFile

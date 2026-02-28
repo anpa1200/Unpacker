@@ -24,6 +24,11 @@ def get_format(sample_path: Path) -> str | None:
     return None
 
 
+# PE optional header magic: 0x10b = PE32 (32-bit), 0x20b = PE32+ (64-bit)
+PE32_MAGIC = 0x10B
+PE32_PLUS_MAGIC = 0x20B
+
+
 def load_pe(sample_path: Path):
     """Load PE; return pefile.PE or None."""
     try:
@@ -31,6 +36,17 @@ def load_pe(sample_path: Path):
         return pefile.PE(str(sample_path), fast_load=True)
     except Exception:
         return None
+
+
+def is_pe32_plus(sample_path: Path) -> bool:
+    """Return True if the file is a PE32+ (64-bit) executable. False if PE32, not PE, or unreadable."""
+    pe = load_pe(sample_path)
+    if pe is None:
+        return False
+    try:
+        return getattr(pe, "OPTIONAL_HEADER", None) and pe.OPTIONAL_HEADER.Magic == PE32_PLUS_MAGIC
+    except Exception:
+        return False
 
 
 def load_elf(sample_path: Path):

@@ -12,6 +12,9 @@ pyzipper>=0.3.5
 # unipacker
 # setuptools>=60,<70  # if ModuleNotFoundError: pkg_resources
 
+# Optional: VMProtect 64-bit (PE32+) unpacking
+# pip install qiling  # then set QILING_ROOTFS to x8664_windows rootfs
+
 # Optional: emulation for generic unpacker (install separately if needed)
 # qiling>=1.4.5
 # speakeasy-emulator>=2.0.0

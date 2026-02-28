@@ -25,3 +25,9 @@ def test_section_detector_needs_pe() -> None:
     det = SectionDetector()
     res = det.detect(Path("/nonexistent"))
     assert res.is_packed is False
+
+
+def test_is_pe32_plus_missing_file() -> None:
+    """is_pe32_plus returns False for missing or non-PE file."""
+    from unpacker.detector.format_ import is_pe32_plus
+    assert is_pe32_plus(Path("/nonexistent")) is False
