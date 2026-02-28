@@ -1,6 +1,8 @@
 # Unpacker
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Tests](https://github.com/anpa1200/Unpacker/actions/workflows/tests.yml/badge.svg)](https://github.com/anpa1200/Unpacker/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub](https://img.shields.io/badge/GitHub-anpa1200%2FUnpacker-green.svg)](https://github.com/anpa1200/Unpacker)
 
 **Modular malware packer detection and unpacking:** detect the packer (UPX, ASPack, Themida, VMProtect, …), run the right unpacker, and validate the result with entropy and static analysis.
@@ -44,7 +46,7 @@ One command, one pipeline; supports **multi-layer** unpacking (e.g. several VMPr
 
 ## Install
 
-**Requirements:** Python 3.8+, optional system UPX and Unipacker for full unpacker coverage.
+**Requirements:** Python 3.10+, optional system UPX and Unipacker for full unpacker coverage.
 
 ```bash
 cd Unpacker
@@ -200,6 +202,12 @@ The same content is in the repo as **[docs/MEDIUM_ARTICLE_UNPACKER_GUIDE.md](doc
 | MPRESS, generic unpacker | Stub (detection only / error) |
 | PE rebuilder (IAT) | Stub |
 | Signature DB | Empty (optional) |
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
 
 ---
 

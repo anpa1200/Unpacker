@@ -27,9 +27,13 @@ class SignatureDetector:
 
     def _get_signatures(self) -> list[tuple[str, bytes, int]]:
         if self._signatures is None:
-            self._signatures = _load_signatures(
-                self.signatures_dir or Path(__file__).resolve().parents[2] / ".." / ".." / "data" / "signatures"
-            )
+            if self.signatures_dir is not None:
+                base = self.signatures_dir
+            else:
+                # Prefer repo-style layout (src/unpacker/detector -> ../../data/signatures)
+                repo_data = Path(__file__).resolve().parents[2] / ".." / ".." / "data" / "signatures"
+                base = repo_data if repo_data.exists() else Path.cwd() / "data" / "signatures"
+            self._signatures = _load_signatures(base)
         return self._signatures
 
     def detect(
