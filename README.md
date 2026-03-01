@@ -85,6 +85,74 @@ Final output: /path/to/unpacked/aspack/NotePad_aspack.unpacked.aspack.exe
 
 ---
 
+## Unpacking techniques (how this tool works)
+
+The tool uses different **unpacking techniques** depending on the packer and binary format.
+
+### Detection (before unpacking)
+
+- **Section names** — Known section name patterns map to packers (e.g. `UPX0`/`UPX1` → UPX, `.aspack`/`.adata` → ASPack, `.vmp0`/`.vmp1` → VMProtect, `Themida` → Themida). Case-insensitive.
+- **File content fallback** — If sections don’t match, the file is scanned for packer-related strings (e.g. `ASPack`, `VMProtect`, `.vmp0`) to still assign a packer.
+- **Path hint** — If the sample path contains `vmprotect` or `themida`, that packer is preferred so samples in known folders get the right unpacker.
+- **Entropy** — High section entropy suggests packed/compressed data; can yield a generic “packed” or “unknown” result.
+- **Heuristics** — Entry point in last section, few imports, etc., often reported as “unknown.”
+
+Detection supports **PE and ELF**; the best matching packer (by confidence) is chosen and the corresponding unpacker is run.
+
+### Unpacking by technique
+
+| Technique | Used for | How it works |
+|-----------|----------|--------------|
+| **Native decompression** | **UPX** (PE & ELF) | Calls system `upx -d`. The packer format is known; UPX decodes in place and writes the decompressed image. No emulation. |
+| **Emulation + dump (Unipacker)** | **ASPack, Themida, VMProtect** (PE32 only) | Loads the PE in [Unicorn](https://www.unicorn-engine.org/) via [Unipacker](https://github.com/unipacker/unipacker). Emulates from the **entry point**; the engine runs until it detects an “unpacking done” condition (e.g. section hop, write+execute region, or packer-specific logic). Then it **dumps** the process memory (image base + size) to a new PE file. Unipacker knows ASPack; for Themida/VMProtect it uses a **generic “unknown”** strategy (emulate until heuristic trigger, then dump). The tool applies **patches** to Unipacker: safe page-by-page memory read (avoids crashes on unmapped regions) and robust dump (if import fix fails, zero IAT and still write the dump). |
+| **Emulation + dump (Qiling)** | **VMProtect** (PE32+ / 64-bit only) | Used when the sample is 64-bit (Unipacker is 32-bit only). Loads the PE in [Qiling](https://github.com/qilingframework/qiling) with a Windows **rootfs** (emulated DLLs). Runs emulation with a **timeout**. After run (or timeout), reads the **loaded image** from emulated memory (base + `SizeOfImage`) and writes it to disk. No packer-specific logic—generic “run then dump” so heavy protectors may only partially unpack. |
+| **Stub** | **MPRESS, generic** | Detection may identify the packer, but the unpacker module is not implemented; the pipeline returns an error or “generic unpacker stub.” |
+
+#### 1. Native decompression (UPX)
+
+The packer format is public and reversible. UPX stores compressed data (e.g. NRV2B or LZMA) in known sections (`UPX0`, `UPX1`); the decompressor algorithm is fixed. The tool invokes system **`upx -d`**: UPX reads the file, decompresses, and writes a new PE/ELF with the original code and layout restored. No execution of the packed binary; works for PE and ELF.
+
+#### 2. Emulation + dump — Unipacker (ASPack, Themida, VMProtect, PE32 only)
+
+Many packers place a **stub** at the entry point that allocates memory, decompresses/decrypts the real code into it, then jumps to it (the **original entry point**, OEP). We **run** that stub in a CPU emulator until the real code is in memory, then **dump** that memory to a file.
+
+- **Emulation:** [Unipacker](https://github.com/unipacker/unipacker) loads the PE in [Unicorn](https://www.unicorn-engine.org/). Execution starts at the PE entry point (the packer stub). Windows APIs (e.g. `VirtualAlloc`, `VirtualProtect`) are stubbed so the stub can allocate and run. When the stub decompresses and jumps to the unpacked code, we detect that and dump.
+- **When to dump:** (1) **Section hop** — execution jumps to a different section that was written at runtime. (2) **Write+execute (W+X)** — a region written during emulation is made executable and execution enters it. (3) **Packer-specific** — for ASPack, Unipacker has built-in logic; for Themida/VMProtect it uses the generic heuristics.
+- **Dump:** Read emulated memory from image base for SizeOfImage (or allocated range), build a PE, fix the import table (IAT). **Patches in this repo:** (1) **Safe read** — read page-by-page and fill unmapped pages with zeros so the dump completes. (2) **Robust dump** — if IAT fix throws, zero the import directory and still write the dump.
+- **Why 32-bit only:** Unipacker’s loader is for PE32; for PE32+ (64-bit) it fails, so we use Qiling for 64-bit VMProtect.
+
+#### 3. Emulation + dump — Qiling (VMProtect 64-bit only)
+
+[Qiling](https://github.com/qilingframework/qiling) is a full system emulator: it loads the PE and a Windows **rootfs** (DLLs). We run **`ql.run(timeout=...)`** with no packer-specific “unpack done” heuristic—we rely on **time**. After run or timeout, we read memory from the image base for SizeOfImage and write it to disk. The result is a raw memory snapshot (IAT not fixed in this path). Heavy protectors may only partially unpack within the timeout.
+
+#### 4. Stub (MPRESS, generic)
+
+No unpacker implemented; the pipeline returns a clear error.
+
+### Summary
+
+- **UPX:** Direct decompression; fast and deterministic.
+- **ASPack / Themida / VMProtect (32-bit):** Emulation in Unicorn via Unipacker; dump on section hop / W+X or packer logic; patches for safe read and robust dump.
+- **VMProtect (64-bit):** Emulation in Qiling with rootfs; timed run then dump; no IAT fix.
+- **Multi-layer:** Re-detect and repeat up to `max_layers` (default 5).
+
+### Is it safe to run real (packed) code in the emulator?
+
+**Short answer:** The packed code runs **inside the emulator**, not natively on your CPU, so it is much safer than executing the sample on the host—but you should still run the tool in an isolated environment (e.g. a VM or a dedicated analysis machine).
+
+**Why emulation is relatively safe:**
+
+- **Unipacker (Unicorn):** The sample’s instructions are **interpreted** by the emulator. They do not run on the host processor. When the code “calls” Windows APIs (e.g. `VirtualAlloc`, `CreateFileA`), Unipacker’s **stubs** run instead of the real OS: they typically only update the emulator’s internal state (e.g. allocate emulated memory, return a fake handle). So the packed code cannot directly access your real filesystem, network, or hardware unless a stub explicitly forwards to the host—and in Unipacker’s design, stubs are meant to simulate behavior, not to perform real dangerous operations.
+- **Qiling:** Same idea (emulated CPU + emulated APIs), but Qiling is a full system emulator and can be configured to map host paths into the emulated environment. If you map a host directory into the rootfs or the emulated “C:\”, writes could affect the host. **Best practice:** use a self-contained rootfs (e.g. only DLLs and a minimal layout) and do not map sensitive host directories. Run in a VM so that even a misconfiguration has limited impact.
+
+**Recommendations:**
+
+- Treat all samples as hostile. Run the unpacker in a **VM**, **sandbox**, or **dedicated analysis machine**, not on a production or personal system.
+- Do not rely on emulation as a perfect sandbox: stub bugs or design choices could, in theory, expose the host. Isolation (VM + no sensitive mounts for Qiling) keeps risk low.
+- **UPX** does not run the sample at all; it only decompresses. So UPX unpacking is safe from a “running code” perspective (apart from trusting the `upx` binary and the decompressed output).
+
+---
+
 ## Real-life example with proof
 
 Using an **ASPack-packed** sample (`NotePad_aspack.exe`), we show that unpacking is correct by comparing **entropy** and **file size** before and after.
@@ -212,10 +280,14 @@ MIT License. See [LICENSE](LICENSE).
 
 ---
 
-## References
+## Related repositories & articles
 
-- **Unpacker repo:** [https://github.com/anpa1200/Unpacker](https://github.com/anpa1200/Unpacker)
-- **Unpacker article (Medium):** [Unpacker: A Practical Guide to Modular Malware Packer Detection and Unpacking](https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b)
-- **PROJECT_SCENARIO.md** — Research, design, and links to PackHero, PISEP, Qiling, CAPE, PE-sieve, packing-box, etc.
-- **String Analyzer:** [Medium guide](https://medium.com/@1200km/a-practical-guide-to-string-analyzer-extract-and-analyze-strings-from-binaries-without-the-875dc74e4868) · [GitHub](https://github.com/anpa1200/String-Analyzer)
-- **Basic File Information Gathering Script:** [Medium guide](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de) · [GitHub](https://github.com/anpa1200/Basic-File-Information-Gathering-Script)
+| Resource | Link |
+|----------|------|
+| **Unpacker (this repo)** | [GitHub](https://github.com/anpa1200/Unpacker) · [Medium: Unpacker Guide](https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b) |
+| **Static-malware-Analysis-Orchestrator** | [GitHub](https://github.com/anpa1200/Static-malware-Analysis-Orchestrator) — runs triage, strings, PE imports, and Unpacker in one pipeline · [Medium: Full workflow](https://medium.com/@1200km/basic-static-malware-analysis-from-triage-to-unpacking-explained-and-automated-9442ef3b11b8) |
+| **PE-Import-Analyzer** | [GitHub](https://github.com/anpa1200/PE-Import-Analyzer) · [Medium: PE Import Analyzer Guide](https://medium.com/@1200km/pe-import-analyzer-a-practical-guide-for-malware-analysts-and-reverse-engineers-29b8b98aeaf3) |
+| **String-Analyzer** | [GitHub](https://github.com/anpa1200/String-Analyzer-) · [Medium: String Analyzer Guide](https://medium.com/@1200km/a-practical-guide-to-string-analyzer-extract-and-analyze-strings-from-binaries-without-the-875dc74e4868) |
+| **Basic-File-Information-Gathering-Script** | [GitHub](https://github.com/anpa1200/Basic-File-Information-Gathering-Script) · [Medium: File Metadata & Static Analysis](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de) |
+| **PROJECT_SCENARIO.md** | Research, design, and links to PackHero, PISEP, Qiling, CAPE, PE-sieve, packing-box, etc. |
+| **Author** | [Medium @1200km](https://medium.com/@1200km) |

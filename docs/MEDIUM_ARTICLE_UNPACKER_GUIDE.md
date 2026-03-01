@@ -12,21 +12,22 @@
 2. [Git repository](#git-repository)
 3. [What is Unpacker?](#what-is-unpacker)
 4. [Architecture at a Glance](#architecture-at-a-glance)
-5. [Detection: How the Tool Knows What’s Packed](#detection-how-the-tool-knows-whats-packed)
-6. [Unpackers: One Module per Packer](#unpackers-one-module-per-packer)
+5. [Unpacking techniques used in this tool](#unpacking-techniques-used-in-this-tool)
+6. [Detection: How the Tool Knows What’s Packed](#detection-how-the-tool-knows-whats-packed)
+7. [Unpackers: One Module per Packer](#unpackers-one-module-per-packer)
    - [UPX](#upx)
    - [ASPack](#aspack)
    - [MPRESS](#mpress)
    - [Themida](#themida)
    - [VMProtect](#vmprotect)
    - [Generic](#generic)
-7. [Running the Pipeline](#running-the-pipeline)
-8. [Validating Unpacking: Why Proof Matters](#validating-unpacking-why-proof-matters)
-9. [Validation with String Analyzer](#validation-with-string-analyzer)
-10. [Validation with Basic File Information Gathering Script](#validation-with-basic-file-information-gathering-script)
-11. [End-to-End Workflow](#end-to-end-workflow)
-12. [Limitations and Tips](#limitations-and-tips)
-13. [Summary and References](#summary-and-references)
+8. [Running the Pipeline](#running-the-pipeline)
+9. [Validating Unpacking: Why Proof Matters](#validating-unpacking-why-proof-matters)
+10. [Validation with String Analyzer](#validation-with-string-analyzer)
+11. [Validation with Basic File Information Gathering Script](#validation-with-basic-file-information-gathering-script)
+12. [End-to-End Workflow](#end-to-end-workflow)
+13. [Limitations and Tips](#limitations-and-tips)
+14. [Summary and References](#summary-and-references)
 
 ---
 
@@ -89,6 +90,32 @@ sample.exe
 - **Detection:** `src/unpacker/detector/` (pipeline, sections, entropy, heuristics, signatures)
 - **Unpackers:** `src/unpacker/unpackers/` (UPX, ASPack, MPRESS, Themida, VMProtect, generic)
 - **CLI:** `scripts/run_unpacker.py` or `unpacker` after `pip install -e .`
+
+---
+
+## Unpacking techniques used in this tool
+
+The tool uses different **unpacking techniques** depending on the packer and binary format. Below is a more detailed explanation of each.
+
+**Detection (before unpacking):** Section names, file-content fallbacks (e.g. "ASPack", "VMProtect" in the binary), path hints (path contains `vmprotect`/`themida`), entropy, and heuristics. Best match by confidence selects the unpacker.
+
+**Unpacking by technique:**
+
+- **Native decompression (UPX)** — System `upx -d` is called. The format is known; UPX decodes and writes the decompressed image. No emulation. Works for PE and ELF.
+- **Emulation + dump — Unipacker (PE32 only)** — Used for ASPack, Themida, and VMProtect 32-bit. The PE is loaded in the [Unicorn](https://www.unicorn-engine.org/) emulator via [Unipacker](https://github.com/unipacker/unipacker). Execution starts at the **entry point**; the engine runs until it detects an “unpacking done” condition (section hop, write+execute, or packer-specific logic). Then it **dumps** the in-memory image to a new PE file. For ASPack, Unipacker uses built-in logic; for Themida/VMProtect it uses a **generic “unknown”** strategy (emulate until heuristic, then dump). This repo **patches** Unipacker for robustness: safe page-by-page memory read (avoids crashes on unmapped regions) and robust dump (if import fix fails, zero IAT and still write the dump).
+- **Emulation + dump — Qiling (PE32+ / 64-bit VMProtect)** — When the sample is 64-bit, Unipacker cannot run. The tool uses [Qiling](https://github.com/qilingframework/qiling) with a Windows rootfs: load the PE, run emulation with a **timeout**, then read the loaded image from memory (base + SizeOfImage) and write it to disk. Generic “run then dump”; heavy protectors may only partially unpack.
+- **Stub (MPRESS, generic)** — Detection may identify the packer, but the unpacker is not implemented; the pipeline returns an error.
+
+**Summary:** UPX is direct decompression; ASPack/Themida/VMProtect use **emulation-based unpacking** (run packed code in an emulator until the real code is in memory, then dump). Multi-layer unpacking re-runs detection on the output and repeats up to `max_layers`.
+
+**More detail:**
+
+- **UPX:** The format is public; UPX stores compressed data in known sections. The tool calls `upx -d`; no execution of the packed binary. UPX decompresses and writes the restored PE/ELF.
+- **Unipacker (PE32):** The packer **stub** at the entry point allocates memory, decompresses the real code, then jumps to it (OEP). We run the stub in Unicorn; Windows APIs are stubbed. We dump when (1) execution **section hops** to a runtime-written section, (2) a **write+execute** region is entered, or (3) packer-specific logic (ASPack) says so. Dump = read memory from image base, build PE, fix IAT. Our patches: safe page-by-page read (unmapped → zeros) and robust dump (if IAT fix fails, zero import dir and still write). Unipacker is 32-bit only.
+- **Qiling (PE32+ VMProtect):** Full system emulator with Windows rootfs. We run with a **timeout** and dump the image from memory; no “unpack done” heuristic, so the dump may be partial. IAT is not fixed in this path.
+- **Stub:** No implementation; clear error returned.
+
+**Is it safe to run real (packed) code in the emulator?** The packed code runs **inside the emulator**, not natively on your CPU. Instructions are interpreted by Unicorn (Unipacker) or Qiling; when the code “calls” Windows APIs, **stubs** run instead of the real OS—they typically only update emulated state (e.g. allocate emulated memory, return a fake handle). So the sample cannot directly access your real filesystem, network, or hardware unless a stub explicitly does something on the host. Unipacker’s stubs are designed to simulate behavior, not to perform real dangerous operations. Qiling can map host paths if configured; use a self-contained rootfs and do not map sensitive host directories. **Recommendation:** treat all samples as hostile and run the unpacker in a **VM or dedicated analysis machine**; do not run on production or personal systems. UPX unpacking does not run the sample at all (only decompression), so it is safe from a “running code” perspective.
 
 ---
 
