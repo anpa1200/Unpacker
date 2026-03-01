@@ -1,11 +1,11 @@
 # Unpacker
 
+**Modular malware packer detection and unpacking (UPX, ASPack, Themida, VMProtect). PE and ELF. One command: detect → unpack → validate.**
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Tests](https://github.com/anpa1200/Unpacker/actions/workflows/tests.yml/badge.svg)](https://github.com/anpa1200/Unpacker/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub](https://img.shields.io/badge/GitHub-anpa1200%2FUnpacker-green.svg)](https://github.com/anpa1200/Unpacker)
-
-**Modular malware packer detection and unpacking:** detect the packer (UPX, ASPack, Themida, VMProtect, …), run the right unpacker, and validate the result with entropy and static analysis.
 
 ---
 
