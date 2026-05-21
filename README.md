@@ -1,5 +1,21 @@
 # Unpacker
 
+Packer detection and unpacking workflow for malware analysts: detect UPX, ASPack, Themida, VMProtect, and related packing patterns so static analysis can reach real code and strings.
+
+## CTI Use
+
+Use this before strings, imports, YARA review, or deeper reverse engineering when a sample appears packed. The output supports malware-family triage, detection engineering, and analyst notes, but it must be validated before claims are made.
+
+## Defender Outputs
+
+| Output | Use |
+|---|---|
+| Packer detection | Triage and analyst routing |
+| Unpacked sample | Follow-on static analysis |
+| Entropy/validation notes | Confidence review |
+| Multi-layer workflow | Packed malware handling |
+| Integration path | Feed String Analyzer, PE Import Analyzer, AIDebug |
+
 **Modular malware packer detection and unpacking (UPX, ASPack, Themida, VMProtect). PE and ELF. One command: detect → unpack → validate.**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
