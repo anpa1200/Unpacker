@@ -3,12 +3,16 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "unpacker"
-version = "0.1.0"
+name = "1200km-unpacker"
+version = "1.0.0"
 description = "Modular malware packer detection and unpacking tool"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
+authors = [
+    { name = "Andrey Pautov", email = "1200km@gmail.com" },
+]
+keywords = ["malware", "unpacker", "packer-detection", "reverse-engineering", "cti"]
 dependencies = [
     "pefile>=2023.2.7",
     "pyelftools>=0.30",
@@ -23,6 +27,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Security",
 ]
+
+[project.urls]
+Homepage = "https://github.com/anpa1200/Unpacker"
+Repository = "https://github.com/anpa1200/Unpacker"
+Documentation = "https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b"
+Issues = "https://github.com/anpa1200/Unpacker/issues"
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-cov"]

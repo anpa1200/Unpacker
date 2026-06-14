@@ -85,7 +85,10 @@ python scripts/run_unpacker.py /path/to/sample.exe -o ./unpacked
 # With timeout (recommended for Themida/VMProtect)
 python scripts/run_unpacker.py /path/to/sample.exe -o ./unpacked --timeout 180
 
-# After pip install -e . you can use:
+# From PyPI:
+pip install 1200km-unpacker
+
+# After PyPI install or pip install -e . you can use:
 unpacker /path/to/sample.exe -o ./unpacked
 ```
 
