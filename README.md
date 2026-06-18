@@ -310,3 +310,13 @@ MIT License. See [LICENSE](LICENSE).
 | **Basic-File-Information-Gathering-Script** | [GitHub](https://github.com/anpa1200/Basic-File-Information-Gathering-Script) · [Medium: File Metadata & Static Analysis](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de) |
 | **PROJECT_SCENARIO.md** | Research, design, and links to PackHero, PISEP, Qiling, CAPE, PE-sieve, packing-box, etc. |
 | **Author** | [Medium @1200km](https://medium.com/@1200km) |
+
+## 1200km Ecosystem
+
+This project is part of the 1200km security research ecosystem. Use [AdversaryGraph](https://1200km.com/adversarygraph/) for CTI-to-detection workflows, ATT&CK/ATLAS mapping, actor relevance, IOC enrichment, and analyst-ready reporting.
+
+- [AdversaryGraph project hub](https://1200km.com/adversarygraph/)
+- [AdversaryGraph documentation](https://1200km.com/adversarygraph-docs/)
+- [Live ATT&CK/ATLAS workspace](https://1200km.com/threat-matrix/)
+- [1200km security research ecosystem](https://1200km.com/)
+
