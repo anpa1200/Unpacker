@@ -1,7 +1,8 @@
 """
 ASPack unpacker: uses Unipacker (emulation-based) when available.
 
-Requires: pip install unipacker and setuptools (for pkg_resources; use setuptools<70 if needed).
+Requires: pip install '1200km-unpacker[unipacker]' (installs unipacker and a
+compatible setuptools for pkg_resources on Python 3.12+).
 """
 from __future__ import annotations
 
@@ -9,7 +10,11 @@ from pathlib import Path
 
 from unpacker.types import UnpackOptions, UnpackResult
 from unpacker.unpackers.base import BaseUnpacker
-from unpacker.unpackers._unipacker_shared import run_unipacker_emulation, unipacker_available
+from unpacker.unpackers._unipacker_shared import (
+    UNIPACKER_INSTALL_HINT,
+    run_unipacker_emulation,
+    unipacker_import_error,
+)
 
 
 class ASPackUnpacker(BaseUnpacker):
@@ -22,10 +27,11 @@ class ASPackUnpacker(BaseUnpacker):
     def unpack(self, sample_path: Path, options: UnpackOptions) -> UnpackResult:
         out_path = options.output_dir / f"{sample_path.stem}.unpacked.aspack{sample_path.suffix}"
 
-        if not unipacker_available():
+        import_error = unipacker_import_error()
+        if import_error:
             return UnpackResult(
                 success=False,
-                error="Unipacker not available. Install with: pip install unipacker",
+                error=f"Unipacker could not be loaded ({import_error}). {UNIPACKER_INSTALL_HINT}",
             )
 
         return run_unipacker_emulation(

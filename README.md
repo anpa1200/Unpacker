@@ -71,7 +71,7 @@ pip install -e .
 ```
 
 - **UPX (for UPX unpacking):** install system UPX, e.g. `apt install upx-ucl` or [upx.github.io](https://upx.github.io/).
-- **ASPack / Themida / VMProtect (32-bit):** `pip install unipacker`. On Python 3.12+ you may need `pip install 'setuptools<70'` for `pkg_resources`.
+- **ASPack / Themida / VMProtect (32-bit):** `pip install '1200km-unpacker[unipacker]'` (installs unipacker plus a setuptools build that still has `pkg_resources`, which unipacker's `unicorn` dependency needs on Python 3.12+). If you already installed `unipacker` on its own and get an error mentioning `distutils` or `pkg_resources` even though it's installed, that's this — run `pip install unipacker 'setuptools<81'`.
 - **VMProtect (64-bit):** `pip install qiling` and set **QILING_ROOTFS** to a directory containing a Windows x64 rootfs (e.g. `x8664_windows` with DLLs). See [Qiling rootfs](https://github.com/qilingframework/rootfs). Optional: `pip install -e ".[emulation]"` to pull in Qiling.
 
 ---

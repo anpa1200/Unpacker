@@ -14,6 +14,12 @@ from unpacker.types import UnpackOptions, UnpackResult
 _PAGE = 0x1000
 _PATCH_INSTALLED = False
 
+UNIPACKER_INSTALL_HINT = (
+    "Install with: pip install '1200km-unpacker[unipacker]'. If the error above mentions "
+    "'distutils' or 'pkg_resources', unipacker's dependency chain (unicorn) needs a "
+    "setuptools build that still provides them: pip install unipacker 'setuptools<81'."
+)
+
 
 def _safe_uc_mem_read(uc, base_addr: int, size: int) -> bytes:
     try:
@@ -220,9 +226,25 @@ def run_unipacker_emulation(
     return UnpackResult(success=False, log=log, error=err)
 
 
-def unipacker_available() -> bool:
+def unipacker_import_error() -> str | None:
+    """Return None if unipacker's core dependencies import cleanly, otherwise a
+    human-readable description of what actually failed.
+
+    Unipacker being pip-installed does not guarantee that importing it
+    succeeds: its dependency chain (unicorn -> distutils/pkg_resources) breaks
+    on Python 3.12+, where distutils was removed from the standard library
+    and pkg_resources is being phased out of newer setuptools releases. That
+    failure happens deep inside unicorn/unipacker's own modules, not in this
+    project's code, so it must be surfaced here rather than reported as
+    "not installed" when it may well be installed but broken in this
+    environment.
+    """
     try:
         from unipacker.core import Sample, UnpackerEngine, SimpleClient  # noqa: F401
-        return True
-    except Exception:
-        return False
+    except Exception as exc:  # pragma: no cover - exact failure mode varies by environment
+        return f"{type(exc).__name__}: {exc}"
+    return None
+
+
+def unipacker_available() -> bool:
+    return unipacker_import_error() is None

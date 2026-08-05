@@ -383,7 +383,7 @@ You can then diff or compare `report.json` for packed vs unpacked (e.g. section 
 - **Path hints:** Samples in folders (or paths) containing `vmprotect` or `themida` get a path-hint so the right unpacker is chosen even when section/signature detection doesn’t fire.
 - **Multi-layer:** The pipeline can run multiple layers (e.g. VMProtect several times); check the final output and validate that one with String Analyzer and fileinfo.
 - **UPX:** Install system UPX (e.g. `apt install upx-ucl`) for native decompression.
-- **Unipacker:** For ASPack/Themida/VMProtect, `pip install unipacker`; on Python 3.12+ you may need `setuptools<70` for `pkg_resources`.
+- **Unipacker:** For ASPack/Themida/VMProtect, `pip install '1200km-unpacker[unipacker]'`; on Python 3.12+ its `unicorn` dependency needs `setuptools<81` for `pkg_resources`, which that extra installs for you.
 
 ---
 

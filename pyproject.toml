@@ -37,6 +37,11 @@ Issues = "https://github.com/anpa1200/Unpacker/issues"
 [project.optional-dependencies]
 dev = ["pytest", "pytest-cov"]
 emulation = ["qiling>=1.4.5"]
+# ASPack / Themida (PE32) unpacking via Unipacker. unipacker's own dependency
+# chain (unicorn) still imports distutils/pkg_resources, both removed or being
+# phased out of Python 3.12+ and newer setuptools, so a compatible setuptools
+# is pinned alongside it rather than left to the user to discover.
+unipacker = ["unipacker", "setuptools<81"]
 
 [project.scripts]
 unpacker = "unpacker.cli:main"
