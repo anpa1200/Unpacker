@@ -36,7 +36,7 @@ def test_model_selection_and_shared_file_preservation(provider,options,expected,
         selected.append(config.model)
         return Provider()
     monkeypatch.setattr(unpacker.ai.providers,"get_provider",factory)
-    monkeypatch.setattr(sys,"argv",["unpacker-ai",str(report),"--provider",provider,"--env-file",str(env),*options])
+    monkeypatch.setattr(sys,"argv",["unpacker-ai",str(report),"--send","--provider",provider,"--env-file",str(env),*options])
     assert cli.main()==0
     assert selected==[expected]
     assert json.loads(capsys.readouterr().out)["model"]==expected

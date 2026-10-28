@@ -21,7 +21,9 @@ def main() -> int:
     model_choice.add_argument("--model-from-env", action="store_true", help="Use provider MODEL variable instead of the OpenAI project default")
     parser.add_argument("--env-file", type=Path, help="Explicit .env file; never sourced or modified")
     parser.add_argument("--timeout", type=float, default=45)
-    parser.add_argument("--preview", action="store_true", help="Print exact evidence payload without loading keys or making requests")
+    delivery = parser.add_mutually_exclusive_group()
+    delivery.add_argument("--preview", action="store_true", help="Print exact metadata payload offline (the default); no keys or request")
+    delivery.add_argument("--send", action="store_true", help="Explicitly send the previewed metadata to the selected external provider")
     parser.add_argument("--from-report", action="store_true", help="Collect allowlisted run metadata from report.json; never sends raw report content")
     args = parser.parse_args()
     try:
@@ -43,7 +45,7 @@ def main() -> int:
         payload = canonical_evidence(evidence)
         if len(payload.encode()) > 32768:
             raise AIError("input_budget_exceeded")
-        if args.preview:
+        if not args.send:
             print(payload)
             return 0
         selected_model = args.model

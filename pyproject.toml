@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1200km-unpacker"
-version = "1.2.0rc12"
+version = "1.2.0rc13"
 description = "Modular malware packer detection and unpacking tool"
 readme = "README.md"
 license = "MIT"

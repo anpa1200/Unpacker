@@ -1,6 +1,11 @@
 # AI integration architecture
 
-Status: versioned advisory integration with report-driven failure diagnosis.
+Status: optional, versioned advisory integration with report-driven failure diagnosis.
+
+RC13 defaults to offline preview. A real provider request requires explicit
+`--send`, mutually exclusive with `--preview`. Keys and an env-file alone never
+authorize sending. Non-AI extraction and the historical 1.0.0 track are separate;
+see [release tracks](RELEASE_TRACKS.md).
 
 ## Design and relationship to AdversaryGraph
 
@@ -49,10 +54,11 @@ bodies are never included in results or printed on errors.
 
 ## Configuration and credentials
 
-Install only the selected provider extra in a managed environment:
+Install only the selected provider extra from the reviewed GitHub release wheel
+in a managed environment; no new PyPI project release is made here:
 
 ```bash
-pip install '1200km-unpacker[ai-openai]'
+python -m pip install '/downloads/1200km_unpacker-1.2.0rc13-py3-none-any.whl[ai-openai]'
 # alternatives: [ai-claude], [ai-gemini]; [ai] supports offline contracts/preview
 ```
 
@@ -107,18 +113,18 @@ Run from the checkout without installing anything:
 ```bash
 PYTHONPATH=src python -m unpacker.ai.cli docs/ai-evidence-example.json --preview
 PYTHONPATH=src python -m unpacker.ai.cli docs/ai-evidence-example.json \
-  --provider openai --env-file /secure/provider.env
+  --send --provider openai --env-file /secure/provider.env
 # Inspect exactly what a real run would disclose, offline:
 PYTHONPATH=src python -m unpacker.ai.cli /path/to/run/report.json --from-report --preview
 # Explicitly request external diagnosis of that allowlisted metadata:
 PYTHONPATH=src python -m unpacker.ai.cli /path/to/run/report.json --from-report \
-  --provider openai --env-file /secure/provider.env
+  --send --provider openai --env-file /secure/provider.env
 ```
 
 After package installation the equivalent entry point is `unpacker-ai`.
 Preview needs no key, does not load dotenv or instantiate a provider, and makes no
-network request. An ordinary invocation sends the validated metadata to the selected
-provider. The key is passed to that provider SDK only. Provider data-retention rules
+network request. Only an invocation with explicit `--send` sends validated metadata to the
+selected provider. Default invocation and `--preview` are offline. The key is passed to that provider SDK only. Provider data-retention rules
 remain an operator deployment decision; this code makes no universal retention claim.
 
 ## Response contract and authority

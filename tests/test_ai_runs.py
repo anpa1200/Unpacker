@@ -253,7 +253,7 @@ def test_cli_from_report_fake_provider_and_local_provenance(tmp_path, monkeypatc
     monkeypatch.setattr(unpacker.ai.providers, "get_provider", lambda _: provider)
     monkeypatch.setenv("OPENAI_API_KEY", "fixture-key")
     monkeypatch.setenv("OPENAI_MODEL", "fixture-model")
-    monkeypatch.setattr(sys, "argv", ["unpacker-ai", str(path), "--from-report"])
+    monkeypatch.setattr(sys, "argv", ["unpacker-ai", str(path), "--from-report", "--send"])
     assert main() == 0
     result = json.loads(capsys.readouterr().out)
     assert result["provenance"]["report_bytes"] == path.stat().st_size

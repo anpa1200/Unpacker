@@ -38,7 +38,7 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: |
           "$RUNNER_TEMP/unpacker-validation/bin/python" -m pytest tests -q -p no:cacheprovider --junitxml=source-tests.xml
-          "$RUNNER_TEMP/unpacker-validation/bin/python" scripts/check_release_tests.py source-tests.xml 935
+          "$RUNNER_TEMP/unpacker-validation/bin/python" scripts/check_release_tests.py source-tests.xml 939
       - name: Check public advisories without dropping owned-build findings
         env:
           PY_VERSION: ${{ matrix.python-version }}
@@ -51,7 +51,7 @@ jobs:
           "$RUNNER_TEMP/unpacker-validation/bin/python" -m build --no-isolation
           wheel_path=$(find "$PWD/dist" -maxdepth 1 -name '*.whl' -print)
           "$RUNNER_TEMP/unpacker-validation/bin/python" -m pip install --no-index --no-deps "$wheel_path"
-          "$RUNNER_TEMP/unpacker-validation/bin/python" -I -B scripts/verify_installed_release.py --wheel "$wheel_path" --source-root "$PWD" --output "$RUNNER_TEMP/installed-evidence" --minimum-tests 935 --sandbox --production-worker --bubblewrap /opt/unpacker-runtime/bwrap-0.12.0/bin/bwrap
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -I -B scripts/verify_installed_release.py --wheel "$wheel_path" --source-root "$PWD" --output "$RUNNER_TEMP/installed-evidence" --minimum-tests 939 --sandbox --production-worker --bubblewrap /opt/unpacker-runtime/bwrap-0.12.0/bin/bwrap
       - uses: actions/upload-artifact@ea165f8d65b6e75b545449e92b4886f43607fa02
         if: always()
         with:

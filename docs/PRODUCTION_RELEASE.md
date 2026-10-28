@@ -1,10 +1,15 @@
 # Production gates and operations
 
 **Current decision: NO-GO for broad production activation.** Source preservation
-and Git publication do not publish a package, deploy a worker or waive the open
+and GitHub prereleases do not publish to a package registry, deploy a worker or waive the open
 [gate ledger](CURRENT_STATUS.md#release-gates). Target: internal single-analyst
 Linux x86_64 CLI, CPython 3.12/3.13, disposable outer worker and independently
 validated output. A public multi-tenant malware service is outside verified scope.
+
+The current optional-AI RC13 and historical non-AI snapshot are GitHub
+prereleases, not production approvals. See [parallel releases](RELEASE_TRACKS.md).
+Automated PyPI publication remains disabled; manual GitHub project-artifact
+publication does not waive these gates.
 
 ## Actual state
 

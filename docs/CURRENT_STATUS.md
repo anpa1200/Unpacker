@@ -1,5 +1,15 @@
 # Current status and known issues
 
+## RC13 parallel-release addendum
+
+Current source is 1.2.0rc13: optional AI defaults to offline preview, and external
+metadata transmission requires `--send`. The deterministic extractor is not
+AI-driven. Historical non-AI 1.0.0 source is preserved independently. See
+[release tracks](RELEASE_TRACKS.md) for packaging/installation and fresh benign
+validation scope. The 935-test and 54-case results below remain specifically
+RC12 historical evidence; no new full corpus or VM acceptance is claimed. All
+GDS, resource-rights, target CI and operational gates remain open.
+
 Status captured for source preservation on **2026-10-28**. Development/testing
 was stopped at the owner's request. This document separates recorded results
 from planned or unfinished capabilities. No universal or production-ready claim.
@@ -149,7 +159,7 @@ setuptools launchers; it contributes no passing runtime evidence.
 |Dependency advisories|52 public versions checked on 2026-10-27; zero active PyPI findings|Current target native/OS/vendor review; no perpetual security clearance|
 |Protected CI|Prepared, not executed|Approved isolated runner, protection policy and exact-source run; no runner registered|
 |Operational activation|Prepared, not accepted|Owner storage/access/retention/backup and incident/rollback policy|
-|Public package/deployment|Not performed|Separate release authorization after gates; publisher disabled|
+|Registry / production deployment|Not performed|Project-only GitHub prereleases are separate; automated registry publisher remains disabled|
 
 The project MIT license does not relicense GPL/native dependencies or Microsoft
 binary resources. Possession, a package license field or a hash is not proof of

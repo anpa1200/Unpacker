@@ -5,10 +5,20 @@ reconstructs selected PE32 programs in bounded guest emulation. It produces
 reports and validation evidence. Detection, extraction, reconstruction and
 behavioral equivalence are different outcomes.
 
-**Current version: 1.2.0rc12. Production acceptance is incomplete. Universal
-packer support and a production malware service are not claimed.** Development
-was stopped on 2026-10-28 at the owner's request to document, commit and push
-the work. This source update does not publish a package or deploy a service.
+**Current version: 1.2.0rc13, AI-assisted prerelease. Production acceptance remains incomplete.**
+The non-AI 1.0.0 source is preserved unchanged as a separate historical legacy
+release; no old tag or release is replaced. Neither track is newly certified
+for hostile production workloads. See [parallel release tracks](docs/RELEASE_TRACKS.md).
+
+|Track|Version/tag|Cloud dependency|
+|---|---|---|
+|Historical legacy|1.0.0 / `v1.0.0-legacy`|None; original source and CLI preserved|
+|Current core + optional AI|1.2.0rc13 / `v1.2.0rc13`|None for extraction; selected AI extra is optional|
+
+`unpacker` remains deterministic and does not invoke AI. `unpacker-ai` previews
+allowlisted metadata offline by default. An intentional external request requires
+`--send`; even an existing API key or `--env-file` does not turn preview into sending.
+Use separate virtual environments to keep both versions installed in parallel.
 
 ## Documentation
 
@@ -58,7 +68,7 @@ The frozen candidate recorded **935 source tests and 935 installed tests plus
 12 verification checks on each CPython 3.12/3.13 environment**. A later real
 Vagrant/QEMU/KVM VM passed one benign static extraction with exact original
 bytes. Full runtime/corpus testing inside that VM was not completed.
-This documentation commit has no new full regression/corpus receipt; frozen
+The RC13 change does not include a new corpus/VM acceptance run; frozen
 package results and publication-only changes are separated in current status.
 
 ## Benign developer quick start
@@ -98,6 +108,6 @@ experimental VM. Full guest runtime, reset, negative controls and exact corpus
 acceptance remain open, as do Windows DLL/LDLL rights or a validated replacement,
 protected CI and operational storage/retention acceptance.
 
-The publish workflow is disabled while gates remain open. No release tag,
-package publication, deployment, new provider request or runner registration
-is part of this source update.
+Automated registry publication remains disabled. The two GitHub prereleases
+contain reviewed project-only artifacts; no PyPI publication, deployment, live
+provider call or persistent runner registration is part of this release.

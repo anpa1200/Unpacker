@@ -147,6 +147,10 @@ Embedding does not create a cgroup/VM or confer production acceptance.
 
 ## Optional AI
 
+See [parallel release installation and rollback](RELEASE_TRACKS.md). Starting
+with RC13, omission of `--send` means offline preview. `--preview` remains an
+explicit alias for that safe default. Extraction has no mandatory AI dependency.
+
 Install the selected provider extra in a managed environment. Preview needs no
 key and makes no network request:
 
@@ -159,7 +163,7 @@ After reviewing the exact payload and authorizing its external disclosure:
 
 ```sh
 unpacker-ai /cases/job/report.json --from-report \
-  --provider openai --model gpt-6.1-sol --env-file /secure/provider.env
+  --send --provider openai --model gpt-6.1-sol --env-file /secure/provider.env
 ```
 
 The last command makes a real request. The code's OpenAI default model string

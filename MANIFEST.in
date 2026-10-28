@@ -7,3 +7,5 @@ recursive-include tests *.py
 recursive-include .github/workflows *.yml
 include SECURITY.md CONTRIBUTING.md
 include .gitignore CITATION.cff requirements.txt
+
+include CHANGELOG.md

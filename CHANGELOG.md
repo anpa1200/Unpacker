@@ -1,5 +1,18 @@
 # Change history
 
+## 1.2.0rc13 — optional AI track alongside historical legacy
+
+* Keep the historical non-AI 1.0.0 commit unchanged and expose it as a separate
+  clearly labeled GitHub legacy snapshot; do not replace existing tags/releases.
+* Keep extraction free of mandatory AI/cloud packages; provider extras and the
+  `unpacker-ai` entry point remain optional.
+* Make AI CLI preview offline by default. External metadata transmission now
+  requires explicit `--send`; `--preview` remains supported.
+* Add synthetic no-AI-import/network and no-credential-load preview regression
+  contracts; provider behavior is tested through mocks, not live paid calls.
+* Document separate environments, migration and rollback, prerelease limits and
+  project-only artifact contents. No new corpus, VM acceptance or registry upload.
+
 ## RC12 source preservation and documentation — 2026-10-28
 
 Preserve the verified RC12 source/tests that previously existed separately

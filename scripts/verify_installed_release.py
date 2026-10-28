@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--wheel',type=Path,required=True)
     parser.add_argument('--source-root',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--minimum-tests',type=int,default=935)
+    parser.add_argument('--minimum-tests',type=int,default=939)
     parser.add_argument('--sandbox',action='store_true')
     parser.add_argument('--production-worker',action='store_true',help='Require the cgroup-supervised worker for benign sandbox checks')
     parser.add_argument('--bubblewrap',type=Path)
