@@ -23,6 +23,26 @@ AI contracts use `[ai]`, and selected providers use `[ai-openai]`, `[ai-claude]`
 or `[ai-gemini]`. Installing an extra does not cause automatic cloud calls.
 The old 1.0.0 source has no AI modules or CLI, and is not modified to retrofit them.
 
+## Published downloads
+
+* [Legacy historical prerelease](https://github.com/anpa1200/Unpacker/releases/tag/v1.0.0-legacy)
+* [Optional-AI RC13 prerelease](https://github.com/anpa1200/Unpacker/releases/tag/v1.2.0rc13)
+
+Each release has five assets: project wheel, sdist, release-manifest.json,
+validation-summary.json and SHA256SUMS. All were downloaded and verified after
+publication. Use the immutable tag, not an assumed package-index release.
+
+```sh
+gh release download v1.0.0-legacy --repo anpa1200/Unpacker --dir downloads/legacy
+gh release download v1.2.0rc13 --repo anpa1200/Unpacker --dir downloads/ai
+(cd downloads/legacy && sha256sum --check SHA256SUMS)
+(cd downloads/ai && sha256sum --check SHA256SUMS)
+```
+
+The example uses GitHub CLI; the same five files can be downloaded through
+the release page. Do not install a wheel before verifying its approved checksum.
+See [exact test receipts and deployment status](RELEASE_STATUS.md).
+
 ## Install and keep both in parallel
 
 Download the reviewed project wheel from the appropriate GitHub release and

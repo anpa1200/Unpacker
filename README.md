@@ -12,8 +12,8 @@ for hostile production workloads. See [parallel release tracks](docs/RELEASE_TRA
 
 |Track|Version/tag|Cloud dependency|
 |---|---|---|
-|Historical legacy|1.0.0 / `v1.0.0-legacy`|None; original source and CLI preserved|
-|Current core + optional AI|1.2.0rc13 / `v1.2.0rc13`|None for extraction; selected AI extra is optional|
+|Historical legacy|1.0.0 / [`v1.0.0-legacy`](https://github.com/anpa1200/Unpacker/releases/tag/v1.0.0-legacy)|None; original source and CLI preserved|
+|Current core + optional AI|1.2.0rc13 / [`v1.2.0rc13`](https://github.com/anpa1200/Unpacker/releases/tag/v1.2.0rc13)|None for extraction; selected AI extra is optional|
 
 `unpacker` remains deterministic and does not invoke AI. `unpacker-ai` previews
 allowlisted metadata offline by default. An intentional external request requires
@@ -27,6 +27,7 @@ Use separate virtual environments to keep both versions installed in parallel.
 * [Results, packer matrix, known issues and release gates](docs/CURRENT_STATUS.md)
 * [Actual experimental VM workflow](docs/VM_WORKFLOW.md)
 * [Production operations and rollback](docs/PRODUCTION_RELEASE.md)
+* [Published releases and deployment destination](docs/RELEASE_STATUS.md)
 * [AI contracts and provider architecture](docs/AI_ARCHITECTURE.md)
 * [Machine-readable fixture matrix](docs/SUPPORTED_MATRIX.json)
 * [Change history](CHANGELOG.md)
@@ -45,6 +46,16 @@ Use separate virtual environments to keep both versions installed in parallel.
   The worker CLI adds a transient resource-limited cgroup.
 * Optional OpenAI/Claude/Gemini diagnostic adapters with exact offline metadata
   preview. Advice cannot execute code, dispatch unpackers or approve recovery.
+
+## Current release verification
+
+The published RC13 wheel passed **939 installed tests plus 12 verification
+steps on CPython 3.12**. A post-publication check reinstalled the downloaded
+GitHub wheel and passed **99 focused AI/dual-track tests**; the downloaded
+legacy wheel also passed its separate benign CLI check. All ten published
+assets were downloaded and hash-verified. See [release receipts and deployment
+status](docs/RELEASE_STATUS.md). These are local benign/mock checks, not a new
+corpus, live-provider or production-worker acceptance run.
 
 ## Recorded verification
 
