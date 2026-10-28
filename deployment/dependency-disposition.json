@@ -1,0 +1,12 @@
+{
+  "status": "old_runtime_exception_superseded_by_maintained_dependency",
+  "candidate": "1.2.0rc12",
+  "runtime_setuptools": "84.1.0",
+  "owned_dependency": "unicorn-unipacker1.0.3b7+unpacker.1",
+  "deprecated_packaging_imports_removed": true,
+  "advisory_query": "owned wheel/source/native hashes verified locally; all public upstream findings retained, no waiver",
+  "raw_scan_result": "52 packages, exit0 at preparation time; limited PyPI registry evidence only",
+  "native_reproducibility": "source build repeated with same SHA256; no change to core C source, build-generator import patch recorded",
+  "distribution": "project wheel separate from optional GPL-based runtime; notices and corresponding source provided for review",
+  "legal_or_owner_risk_acceptance_claimed": false
+}

@@ -1,0 +1,9 @@
+recursive-include scripts *.py
+recursive-include docs *.md *.json
+recursive-include config *.yaml
+recursive-include requirements *.txt *.lock
+recursive-include deployment *.json
+recursive-include tests *.py
+recursive-include .github/workflows *.yml
+include SECURITY.md CONTRIBUTING.md
+include .gitignore CITATION.cff requirements.txt

@@ -19,6 +19,10 @@ SECTION_RULES: list[tuple[tuple[str, ...], str, float]] = [
     (("WinLicense",), "winlicense", 0.90),
     ((".enigma1", ".enigma2"), "enigma", 0.90),
     (("NSPack",), "nspack", 0.90),
+    (("FSG!", ".fsg"), "fsg", 0.90),
+    (("MEW", ".mew"), "mew", 0.90),
+    (("PECompact", "pec1", "pec2"), "pecompact", 0.85),
+    ((".petite", "petite"), "petite", 0.90),
 ]
 
 
@@ -95,7 +99,7 @@ class SectionDetector:
             try:
                 data = sample_path.read_bytes()
                 if b"ASPack" in data or b"aspack" in data or b".aspack" in data:
-                    matches.append(PackerMatch(packer_id="aspack", confidence=0.75, method=self.name))
+                    matches.append(PackerMatch(packer_id="aspack", confidence=0.35, method="content_hint"))
             except OSError:
                 pass
 
@@ -104,7 +108,7 @@ class SectionDetector:
             try:
                 data = sample_path.read_bytes()
                 if b"VMProtect" in data or b".vmp0" in data or b".vmp1" in data or b".vmp2" in data:
-                    matches.append(PackerMatch(packer_id="vmprotect", confidence=0.75, method=self.name))
+                    matches.append(PackerMatch(packer_id="vmprotect", confidence=0.35, method="content_hint"))
             except OSError:
                 pass
 

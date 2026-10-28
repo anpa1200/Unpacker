@@ -1,0 +1,11 @@
+{
+  "schema_version": "1",
+  "format": "pe",
+  "architecture": "x86",
+  "parse_status": "parsed",
+  "observations": [
+    {"id": "signal.1", "kind": "packing_signal", "signal": "upx_sections"},
+    {"id": "backend.1", "kind": "backend_status", "backend": "upx_native", "status": "available"},
+    {"id": "validation.1", "kind": "validation", "status": "not_checked"}
+  ]
+}

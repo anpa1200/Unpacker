@@ -29,12 +29,31 @@ PE32_MAGIC = 0x10B
 PE32_PLUS_MAGIC = 0x20B
 
 
+def parsed_architecture(pe=None, elf=None) -> str:
+    """Use consistent parsed header fields, never a packer name or file suffix."""
+    try:
+        if pe is not None:
+            return {(0x14C, PE32_MAGIC): "x86", (0x8664, PE32_PLUS_MAGIC): "x86_64",
+                    (0xAA64, PE32_PLUS_MAGIC): "arm64"}.get((pe.FILE_HEADER.Machine, pe.OPTIONAL_HEADER.Magic), "unknown")
+        if elf is not None:
+            return {("EM_386", 32): "x86", ("EM_X86_64", 64): "x86_64",
+                    ("EM_AARCH64", 64): "arm64"}.get((elf.header["e_machine"], elf.elfclass), "unknown")
+    except (AttributeError, KeyError, TypeError):
+        pass
+    return "unknown"
+
+
 def load_pe(sample_path: Path):
     """Load PE; return pefile.PE or None."""
+    pe = None
     try:
         import pefile
-        return pefile.PE(str(sample_path), fast_load=True)
+        pe = pefile.PE(str(sample_path), fast_load=True)
+        pe.parse_data_directories(directories=[pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_IMPORT"]])
+        return pe
     except Exception:
+        if pe is not None:
+            pe.close()
         return None
 
 
@@ -47,6 +66,8 @@ def is_pe32_plus(sample_path: Path) -> bool:
         return getattr(pe, "OPTIONAL_HEADER", None) and pe.OPTIONAL_HEADER.Magic == PE32_PLUS_MAGIC
     except Exception:
         return False
+    finally:
+        pe.close()
 
 
 def load_elf(sample_path: Path):

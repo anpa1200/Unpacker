@@ -49,10 +49,8 @@ def test_unipacker_import_error_surfaces_the_real_exception(monkeypatch):
     assert _unipacker_shared.unipacker_available() is False
 
 
-def test_install_hint_points_at_the_actual_fix():
-    # The bug report showed a user with unipacker already installed getting
-    # told to "pip install unipacker" again, with no mention of the real
-    # cause. The hint must name the actual fix (the extra, and the
-    # setuptools/pkg_resources workaround) instead of repeating that.
-    assert "unipacker]" in _unipacker_shared.UNIPACKER_INSTALL_HINT
-    assert "setuptools" in _unipacker_shared.UNIPACKER_INSTALL_HINT
+def test_install_hint_points_at_the_reviewed_runtime():
+    # Missing/broken engines must point to the reviewed offline runtime.
+    assert "release bundle" in _unipacker_shared.UNIPACKER_INSTALL_HINT
+    assert "hashed lock" in _unipacker_shared.UNIPACKER_INSTALL_HINT
+    assert "setuptools<81" not in _unipacker_shared.UNIPACKER_INSTALL_HINT

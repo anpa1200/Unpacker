@@ -1,23 +1,10 @@
-"""
-MPRESS unpacker: stub for MPRESS-specific or generic dynamic unpacking.
-"""
-from __future__ import annotations
-
-from pathlib import Path
-
-from unpacker.types import UnpackOptions, UnpackResult
+"""MPRESS PE32 adapter using the common supervised Unipacker path."""
 from unpacker.unpackers.base import BaseUnpacker
-
+from unpacker.unpackers._unipacker_shared import run_unipacker_emulation
 
 class MPRESSUnpacker(BaseUnpacker):
     @property
-    def packer_id(self) -> str:
-        return "mpress"
+    def packer_id(self): return "mpress"
 
-    def unpack(self, sample_path: Path, options: UnpackOptions) -> UnpackResult:
-        # TODO: MPRESS-specific decompression or generic dynamic
-        return UnpackResult(
-            success=False,
-            log=["MPRESS unpacker not yet implemented; use generic module"],
-            error="MPRESS unpacker stub",
-        )
+    def unpack(self, sample_path, options):
+        return run_unipacker_emulation(sample_path,options.output_dir/"dump.bin",options,packer_label="unipacker_mpress")

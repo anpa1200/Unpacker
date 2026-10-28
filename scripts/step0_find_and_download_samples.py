@@ -19,6 +19,9 @@ import re
 import sys
 import time
 import zipfile
+import hashlib
+import tempfile
+import json
 from pathlib import Path
 
 try:
@@ -120,22 +123,34 @@ def fetch_hashes_for_packer(
 
 def download_sample(auth_key: str, sha256: str) -> bytes:
     """Download sample as ZIP bytes."""
+    if not re.fullmatch(r"[a-fA-F0-9]{64}",sha256):
+        raise ValueError("Invalid requested SHA-256")
     r = requests.post(
         API_BASE,
         data={"query": "get_file", "sha256_hash": sha256},
         headers={"Auth-Key": auth_key},
         timeout=120,
-        stream=False,
+        stream=True,
     )
     r.raise_for_status()
-    if not r.content:
+    chunks=[]
+    size=0
+    try:
+        for chunk in r.iter_content(65536):
+            size+=len(chunk)
+            if size>8*1024*1024:raise RuntimeError("Download exceeds size limit")
+            chunks.append(chunk)
+    finally:
+        r.close()
+    content=b"".join(chunks)
+    if not content:
         raise RuntimeError("API returned empty response")
     # ZIP files start with PK
-    if r.content[:2] == b"PK":
-        return r.content
+    if content[:2] == b"PK":
+        return content
     # Otherwise API may have returned JSON error (e.g. file_not_found, rate limit)
     try:
-        j = r.json()
+        j = json.loads(content)
         status = j.get("query_status", "unknown")
         raise RuntimeError(f"API error: {status}")
     except ValueError:
@@ -143,40 +158,37 @@ def download_sample(auth_key: str, sha256: str) -> bytes:
 
 
 def extract_zip(zip_bytes: bytes, dest_dir: Path, password: bytes = ZIP_PASSWORD) -> Path | None:
-    """Extract ZIP (AES-supported if pyzipper) to dest_dir. Returns path to first extracted file."""
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    first_extracted: Path | None = None
-    if pyzipper:
+    """Extract one bounded member into a new quarantine directory, never by archive path."""
+    if len(zip_bytes)>8*1024*1024:
+        raise ValueError("Archive download too large")
+    archive_type=pyzipper.AESZipFile if pyzipper else zipfile.ZipFile
+    with archive_type(io.BytesIO(zip_bytes),"r") as zf:
+        members=[m for m in zf.infolist() if not m.is_dir()]
+        if len(members)!=1:raise ValueError("Expected exactly one sample member")
+        member=members[0]
+        normalized=member.filename.replace("\\\\","/")
+        if normalized.startswith("/") or ".." in normalized.split("/") or ":" in normalized:
+            raise ValueError("Unsafe archive member path")
+        if not 0<member.file_size<=32*1024*1024 or member.file_size>max(1,member.compress_size)*1000:
+            raise ValueError("Archive expansion exceeds limits")
+        dest_dir.mkdir(parents=True,exist_ok=True)
+        quarantine=Path(tempfile.mkdtemp(prefix="quarantine-",dir=dest_dir))
+        target=quarantine/"sample.bin"
         try:
-            with pyzipper.AESZipFile(io.BytesIO(zip_bytes), "r") as zf:
-                zf.setpassword(password)
-                names = [n for n in zf.namelist() if not n.endswith("/")]
-                if not names:
-                    return None
-                for name in names:
-                    zf.extract(name, path=dest_dir, pwd=password)
-                    if first_extracted is None:
-                        first_extracted = dest_dir / name
-                return first_extracted
-        except Exception:
-            pass
-    with zipfile.ZipFile(io.BytesIO(zip_bytes), "r") as zf:
-        try:
-            zf.setpassword(password)
-        except TypeError:
-            zf.setpassword(password.decode("utf-8"))
-        names = [n for n in zf.namelist() if not n.endswith("/")]
-        if not names:
-            return None
-        for name in names:
-            zf.extract(
-                name,
-                path=dest_dir,
-                pwd=password if isinstance(password, bytes) else None,
-            )
-            if first_extracted is None:
-                first_extracted = dest_dir / name
-    return first_extracted
+            with zf.open(member,pwd=password) as source, target.open("xb") as output:
+                total=0
+                while True:
+                    data=source.read(65536)
+                    if not data:break
+                    total+=len(data)
+                    if total>32*1024*1024:raise ValueError("Expanded sample too large")
+                    output.write(data)
+            target.chmod(0o600)
+            return target
+        except BaseException:
+            target.unlink(missing_ok=True)
+            quarantine.rmdir()
+            raise
 
 
 def main() -> int:
@@ -208,10 +220,12 @@ def main() -> int:
         dest="packers",
         help="Restrict to these packer ids (e.g. --packer upx --packer aspack)",
     )
+    parser.add_argument("--extract", action="store_false", dest="no_extract", help="Explicitly extract into bounded quarantine")
     parser.add_argument(
         "--no-extract",
         action="store_true",
-        help="Keep downloaded ZIPs only, do not extract",
+        default=True,
+        help="Keep encrypted ZIPs only (default)",
     )
     parser.add_argument(
         "--dry-run",
@@ -251,11 +265,11 @@ def main() -> int:
                 break
             sha256 = entry.get("sha256_hash")
             file_name = entry.get("file_name") or f"{sha256}.bin"
-            if not sha256:
+            if not sha256 or not re.fullmatch(r"[a-fA-F0-9]{64}",str(sha256)):
                 continue
             stem = Path(file_name).stem
             stem = sanitize_filename(stem)
-            ext = Path(file_name).suffix or ".bin"
+            ext = ".bin"
             final_name = f"{stem}_{packer_id}{ext}"
             out_path = packer_dir / final_name
             zip_path = packer_dir / f"{sha256}.zip"
@@ -280,6 +294,9 @@ def main() -> int:
                 try:
                     extracted = extract_zip(zip_bytes, packer_dir)
                     if extracted and extracted.exists():
+                        if hashlib.sha256(extracted.read_bytes()).hexdigest().lower() != sha256.lower():
+                            extracted.unlink()
+                            raise ValueError("Extracted sample SHA-256 does not match requested identity")
                         target = packer_dir / final_name
                         if target != extracted:
                             extracted.rename(target)

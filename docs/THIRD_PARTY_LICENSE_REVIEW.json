@@ -1,0 +1,1006 @@
+{
+  "schema": "1",
+  "scope": "Locked Linux runtime metadata only; not legal clearance or complete transitive-source licensing audit",
+  "components": [
+    {
+      "name": "annotated-types",
+      "version": "0.7.0",
+      "license_expression": null,
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "annotated_types-0.7.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/annotated-types/annotated-types",
+        "Source, https://github.com/annotated-types/annotated-types",
+        "Changelog, https://github.com/annotated-types/annotated-types/releases"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "anthropic",
+      "version": "0.40.0",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "anthropic-0.40.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/anthropics/anthropic-sdk-python",
+        "Repository, https://github.com/anthropics/anthropic-sdk-python"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "anyio",
+      "version": "4.14.2",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "anyio-4.14.2.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Documentation, https://anyio.readthedocs.io/en/latest/",
+        "Changelog, https://anyio.readthedocs.io/en/stable/versionhistory.html",
+        "Source code, https://github.com/agronholm/anyio",
+        "Issue tracker, https://github.com/agronholm/anyio/issues"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "attrs",
+      "version": "25.4.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "attrs-25.4.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Documentation, https://www.attrs.org/",
+        "Changelog, https://www.attrs.org/en/stable/changelog.html",
+        "GitHub, https://github.com/python-attrs/attrs",
+        "Funding, https://github.com/sponsors/hynek",
+        "Tidelift, https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&utm_medium=pypi"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "build",
+      "version": "1.4.4",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "build-1.4.4.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "changelog, https://build.pypa.io/en/stable/changelog.html",
+        "homepage, https://build.pypa.io",
+        "issues, https://github.com/pypa/build/issues",
+        "source, https://github.com/pypa/build"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "capstone",
+      "version": "5.0.8",
+      "license_expression": null,
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "capstone-5.0.8.dist-info/LICENSE.TXT"
+      ],
+      "project_urls": [],
+      "homepage": "https://www.capstone-engine.org",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.19",
+      "license_expression": null,
+      "metadata_license": "MPL-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+      ],
+      "installed_license_files": [
+        "certifi-2026.10.19.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Source, https://github.com/certifi/python-certifi"
+      ],
+      "homepage": "https://github.com/certifi/python-certifi",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "cffi",
+      "version": "2.0.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "cffi-2.0.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Documentation, https://cffi.readthedocs.io/",
+        "Changelog, https://cffi.readthedocs.io/en/latest/whatsnew.html",
+        "Downloads, https://github.com/python-cffi/cffi/releases",
+        "Contact, https://groups.google.com/forum/#!forum/python-cffi",
+        "Source Code, https://github.com/python-cffi/cffi",
+        "Issue Tracker, https://github.com/python-cffi/cffi/issues"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.4.7",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "charset_normalizer-3.4.7.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Changelog, https://github.com/jawah/charset_normalizer/blob/master/CHANGELOG.md",
+        "Documentation, https://charset-normalizer.readthedocs.io/",
+        "Code, https://github.com/jawah/charset_normalizer",
+        "Issue tracker, https://github.com/jawah/charset_normalizer/issues"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "cmd2",
+      "version": "2.0.0",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "cmd2-2.0.0.dist-info/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/python-cmd2/cmd2",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "license_expression": null,
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "colorama-0.4.6.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/tartley/colorama"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "coverage",
+      "version": "7.13.4",
+      "license_expression": null,
+      "metadata_license": "Apache-2.0",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "coverage-7.13.4.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [
+        "Documentation, https://coverage.readthedocs.io/en/7.13.4",
+        "Funding, https://tidelift.com/subscription/pkg/pypi-coverage?utm_source=pypi-coverage&utm_medium=referral&utm_campaign=pypi",
+        "Issues, https://github.com/coveragepy/coveragepy/issues",
+        "Mastodon, https://hachyderm.io/@coveragepy",
+        "Mastodon (nedbat), https://hachyderm.io/@nedbat"
+      ],
+      "homepage": "https://github.com/coveragepy/coveragepy",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "cryptography",
+      "version": "50.0.2",
+      "license_expression": "Apache-2.0 OR BSD-3-Clause",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "cryptography-50.0.2.dist-info/licenses/LICENSE",
+        "cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE",
+        "cryptography-50.0.2.dist-info/licenses/LICENSE.BSD"
+      ],
+      "project_urls": [
+        "changelog, https://cryptography.io/en/latest/changelog/",
+        "documentation, https://cryptography.io/",
+        "homepage, https://github.com/pyca/cryptography",
+        "issues, https://github.com/pyca/cryptography/issues",
+        "source, https://github.com/pyca/cryptography/"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "distro",
+      "version": "1.9.0",
+      "license_expression": null,
+      "metadata_license": "Apache License, Version 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "distro-1.9.0.dist-info/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/python-distro/distro",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "google-auth",
+      "version": "2.56.3",
+      "license_expression": null,
+      "metadata_license": "Apache 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "google_auth-2.56.3.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "google-genai",
+      "version": "2.8.0",
+      "license_expression": "Apache-2.0",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "google_genai-2.8.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/googleapis/python-genai"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "h11-0.16.0.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/python-hyper/h11",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "license_expression": "BSD-3-Clause",
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "httpcore-1.0.9.dist-info/licenses/LICENSE.md"
+      ],
+      "project_urls": [
+        "Documentation, https://www.encode.io/httpcore",
+        "Homepage, https://www.encode.io/httpcore/",
+        "Source, https://github.com/encode/httpcore"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "license_expression": null,
+      "metadata_license": "BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "httpx-0.28.1.dist-info/licenses/LICENSE.md"
+      ],
+      "project_urls": [
+        "Changelog, https://github.com/encode/httpx/blob/master/CHANGELOG.md",
+        "Documentation, https://www.python-httpx.org",
+        "Homepage, https://github.com/encode/httpx",
+        "Source, https://github.com/encode/httpx"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "idna",
+      "version": "3.18",
+      "license_expression": "BSD-3-Clause",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "idna-3.18.dist-info/licenses/LICENSE.md"
+      ],
+      "project_urls": [
+        "Changelog, https://github.com/kjd/idna/blob/master/HISTORY.md",
+        "Issue tracker, https://github.com/kjd/idna/issues",
+        "Source, https://github.com/kjd/idna"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "iniconfig-2.3.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/pytest-dev/iniconfig"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "jiter",
+      "version": "0.13.0",
+      "license_expression": null,
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "jiter-0.13.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/pydantic/jiter/",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "openai",
+      "version": "1.58.1",
+      "license_expression": "Apache-2.0",
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "openai-1.58.1.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/openai/openai-python",
+        "Repository, https://github.com/openai/openai-python"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "packaging",
+      "version": "26.0",
+      "license_expression": "Apache-2.0 OR BSD-2-Clause",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "packaging-26.0.dist-info/licenses/LICENSE",
+        "packaging-26.0.dist-info/licenses/LICENSE.APACHE",
+        "packaging-26.0.dist-info/licenses/LICENSE.BSD"
+      ],
+      "project_urls": [
+        "Documentation, https://packaging.pypa.io/",
+        "Source, https://github.com/pypa/packaging"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pefile",
+      "version": "2024.8.26",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "pefile-2024.8.26.dist-info/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/erocarrera/pefile",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pluggy-1.6.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyasn1",
+      "version": "0.6.4",
+      "license_expression": null,
+      "metadata_license": "BSD-2-Clause",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "pyasn1-0.6.4.dist-info/licenses/LICENSE.rst"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/pyasn1/pyasn1",
+        "Documentation, https://pyasn1.readthedocs.io",
+        "Source, https://github.com/pyasn1/pyasn1",
+        "Issues, https://github.com/pyasn1/pyasn1/issues",
+        "Changelog, https://pyasn1.readthedocs.io/en/latest/changelog.html"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyasn1-modules",
+      "version": "0.4.2",
+      "license_expression": null,
+      "metadata_license": "BSD",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "pyasn1_modules-0.4.2.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [
+        "Source, https://github.com/pyasn1/pyasn1-modules",
+        "Issues, https://github.com/pyasn1/pyasn1-modules/issues",
+        "Changelog, https://github.com/pyasn1/pyasn1-modules/blob/master/CHANGES.txt"
+      ],
+      "homepage": "https://github.com/pyasn1/pyasn1-modules",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pycparser",
+      "version": "2.22",
+      "license_expression": null,
+      "metadata_license": "BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "pycparser-2.22.dist-info/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/eliben/pycparser",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pydantic",
+      "version": "2.11.10",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pydantic-2.11.10.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/pydantic/pydantic",
+        "Documentation, https://docs.pydantic.dev",
+        "Funding, https://github.com/sponsors/samuelcolvin",
+        "Source, https://github.com/pydantic/pydantic",
+        "Changelog, https://docs.pydantic.dev/latest/changelog/"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.33.2",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pydantic_core-2.33.2.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/pydantic/pydantic-core",
+        "Funding, https://github.com/sponsors/samuelcolvin",
+        "Source, https://github.com/pydantic/pydantic-core"
+      ],
+      "homepage": "https://github.com/pydantic/pydantic-core",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyelftools",
+      "version": "0.32",
+      "license_expression": null,
+      "metadata_license": "Public domain",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "pyelftools-0.32.dist-info/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/eliben/pyelftools",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pygments",
+      "version": "2.20.0",
+      "license_expression": "BSD-2-Clause",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "pygments-2.20.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://pygments.org",
+        "Documentation, https://pygments.org/docs",
+        "Source, https://github.com/pygments/pygments",
+        "Bug Tracker, https://github.com/pygments/pygments/issues",
+        "Changelog, https://github.com/pygments/pygments/blob/master/CHANGES"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyperclip",
+      "version": "1.11.0",
+      "license_expression": null,
+      "metadata_license": "BSD",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "pyperclip-1.11.0.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/asweigart/pyperclip"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyproject-hooks",
+      "version": "1.2.0",
+      "license_expression": null,
+      "metadata_license": null,
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pyproject_hooks-1.2.0.dist-info/LICENSE"
+      ],
+      "project_urls": [
+        "Changelog, https://pyproject-hooks.readthedocs.io/en/latest/changelog.html",
+        "Documentation, https://pyproject-hooks.readthedocs.io/",
+        "Source, https://github.com/pypa/pyproject-hooks"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pytest",
+      "version": "9.0.3",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "pytest-9.0.3.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Changelog, https://docs.pytest.org/en/stable/changelog.html",
+        "Contact, https://docs.pytest.org/en/stable/contact.html",
+        "Funding, https://docs.pytest.org/en/stable/sponsor.html",
+        "Homepage, https://docs.pytest.org/en/latest/",
+        "Source, https://github.com/pytest-dev/pytest",
+        "Tracker, https://github.com/pytest-dev/pytest/issues"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pytest-cov",
+      "version": "6.0.0",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pytest_cov-6.0.0.dist-info/LICENSE"
+      ],
+      "project_urls": [
+        "Documentation, https://pytest-cov.readthedocs.io/",
+        "Changelog, https://pytest-cov.readthedocs.io/en/latest/changelog.html",
+        "Issue Tracker, https://github.com/pytest-dev/pytest-cov/issues"
+      ],
+      "homepage": "https://github.com/pytest-dev/pytest-cov",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.2",
+      "license_expression": null,
+      "metadata_license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "python_dotenv-1.2.2.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Source, https://github.com/theskumar/python-dotenv"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "license_expression": null,
+      "metadata_license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "installed_license_files": [
+        "pyyaml-6.0.3.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Bug Tracker, https://github.com/yaml/pyyaml/issues",
+        "CI, https://github.com/yaml/pyyaml/actions",
+        "Documentation, https://pyyaml.org/wiki/PyYAMLDocumentation",
+        "Mailing lists, http://lists.sourceforge.net/lists/listinfo/yaml-core",
+        "Source Code, https://github.com/yaml/pyyaml"
+      ],
+      "homepage": "https://pyyaml.org/",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "license_expression": null,
+      "metadata_license": "Apache-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "requests-2.34.2.dist-info/licenses/LICENSE",
+        "requests-2.34.2.dist-info/licenses/NOTICE"
+      ],
+      "project_urls": [
+        "Documentation, https://requests.readthedocs.io",
+        "Source, https://github.com/psf/requests"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "setuptools",
+      "version": "84.1.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "setuptools-84.1.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+        "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+        "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+        "setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.APACHE",
+        "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.BSD",
+        "setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+        "setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+        "setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+        "setuptools/config/NOTICE",
+        "setuptools/config/_validate_pyproject/NOTICE"
+      ],
+      "project_urls": [
+        "Source, https://github.com/pypa/setuptools",
+        "Documentation, https://setuptools.pypa.io/",
+        "Changelog, https://setuptools.pypa.io/en/stable/history.html"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "sniffio",
+      "version": "1.3.1",
+      "license_expression": null,
+      "metadata_license": "MIT OR Apache-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "sniffio-1.3.1.dist-info/LICENSE",
+        "sniffio-1.3.1.dist-info/LICENSE.APACHE2",
+        "sniffio-1.3.1.dist-info/LICENSE.MIT"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/python-trio/sniffio",
+        "Documentation, https://sniffio.readthedocs.io/",
+        "Changelog, https://sniffio.readthedocs.io/en/latest/history.html"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "tenacity",
+      "version": "9.1.4",
+      "license_expression": null,
+      "metadata_license": "Apache 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "tenacity-9.1.4.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/jd/tenacity",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "tqdm",
+      "version": "4.67.3",
+      "license_expression": null,
+      "metadata_license": "MPL-2.0 AND MIT",
+      "license_classifiers": [],
+      "installed_license_files": [],
+      "project_urls": [
+        "homepage, https://tqdm.github.io",
+        "repository, https://github.com/tqdm/tqdm",
+        "changelog, https://tqdm.github.io/releases",
+        "wiki, https://github.com/tqdm/tqdm/wiki"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.15.0",
+      "license_expression": "PSF-2.0",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "typing_extensions-4.15.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Bug Tracker, https://github.com/python/typing_extensions/issues",
+        "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+        "Documentation, https://typing-extensions.readthedocs.io/",
+        "Home, https://github.com/python/typing_extensions",
+        "Q & A, https://github.com/python/typing/discussions",
+        "Repository, https://github.com/python/typing_extensions"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.2",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "typing_inspection-0.4.2.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/pydantic/typing-inspection",
+        "Documentation, https://pydantic.github.io/typing-inspection/dev/",
+        "Source, https://github.com/pydantic/typing-inspection",
+        "Changelog, https://github.com/pydantic/typing-inspection/blob/main/HISTORY.md"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "unicorn-unipacker",
+      "version": "1.0.3b7+unpacker.1",
+      "license_expression": null,
+      "metadata_license": "GPL-2.0; see included component licenses and provenance",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "unicorn_unipacker-1.0.3b7+unpacker.1.dist-info/licenses/COPYING",
+        "unicorn_unipacker-1.0.3b7+unpacker.1.dist-info/licenses/COPYING.LGPL2",
+        "unicorn_unipacker-1.0.3b7+unpacker.1.dist-info/licenses/QEMU-LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/unipacker/unicorn",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "unipacker",
+      "version": "1.0.8",
+      "license_expression": null,
+      "metadata_license": "GPL-2.0",
+      "license_classifiers": [],
+      "installed_license_files": [
+        "unipacker-1.0.8.dist-info/LICENSE",
+        "unipacker-1.0.8.dist-info/NOTICE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/unipacker/unipacker",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "urllib3-2.8.0.dist-info/licenses/LICENSE.txt"
+      ],
+      "project_urls": [
+        "Changelog, https://github.com/urllib3/urllib3/blob/main/CHANGES.rst",
+        "Documentation, https://urllib3.readthedocs.io",
+        "Code, https://github.com/urllib3/urllib3",
+        "Issue tracker, https://github.com/urllib3/urllib3/issues",
+        "Security policy, https://urllib3.readthedocs.io/en/latest/security.html"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "wcwidth",
+      "version": "0.6.0",
+      "license_expression": "MIT",
+      "metadata_license": null,
+      "license_classifiers": [],
+      "installed_license_files": [
+        "wcwidth-0.6.0.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/jquast/wcwidth"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "websockets",
+      "version": "13.1",
+      "license_expression": null,
+      "metadata_license": "BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "installed_license_files": [
+        "websockets-13.1.dist-info/LICENSE"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/python-websockets/websockets",
+        "Changelog, https://websockets.readthedocs.io/en/stable/project/changelog.html",
+        "Documentation, https://websockets.readthedocs.io/",
+        "Funding, https://tidelift.com/subscription/pkg/pypi-websockets?utm_source=pypi-websockets&utm_medium=referral&utm_campaign=readme",
+        "Tracker, https://github.com/python-websockets/websockets/issues"
+      ],
+      "homepage": null,
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    },
+    {
+      "name": "yara-python",
+      "version": "4.5.4",
+      "license_expression": null,
+      "metadata_license": "Apache 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "installed_license_files": [
+        "yara_python-4.5.4.dist-info/licenses/LICENSE"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/VirusTotal/yara-python",
+      "assessment": "metadata_only_operator_review_required",
+      "missing_machine_license": false
+    }
+  ],
+  "missing_machine_license": [],
+  "required_reviews": [
+    "unicorn-unipacker source/native core license and redistribution provenance",
+    "unipacker GPL2 obligations when distributing its optional dependency",
+    "external UPX and Bubblewrap own licenses, source and advisory policy"
+  ],
+  "build_backend": {
+    "name": "setuptools",
+    "version": "84.1.0",
+    "license": "MIT per official distribution metadata; separate build-only environment"
+  },
+  "external_tools": [
+    {
+      "name": "bubblewrap",
+      "installed_version": "0.9.0-1ubuntu0.3",
+      "target_version": "0.12.0",
+      "license": "LGPL-2.1-or-later; review official source COPYING",
+      "release_gate": "blocked_vulnerable_current_host"
+    },
+    {
+      "name": "upx-ucl",
+      "installed_version": "4.2.2-3",
+      "license": "GPL-2.0-or-later with UPX special exception; verify distribution copyright for redistribution",
+      "release_gate": "operator_component_review_required"
+    }
+  ]
+}

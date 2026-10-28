@@ -1,7 +1,7 @@
 """
 Unpacker — Modular malware packer detection and unpacking.
 """
-__version__ = "1.0.0"
+__version__ = "1.2.0rc12"
 
 from unpacker.types import (
     DetectionResult,

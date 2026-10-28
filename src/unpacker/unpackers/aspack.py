@@ -2,7 +2,7 @@
 ASPack unpacker: uses Unipacker (emulation-based) when available.
 
 Requires: pip install '1200km-unpacker[unipacker]' (installs unipacker and a
-compatible setuptools for pkg_resources on Python 3.12+).
+the reviewed Linux runtime from the release bundle).
 """
 from __future__ import annotations
 

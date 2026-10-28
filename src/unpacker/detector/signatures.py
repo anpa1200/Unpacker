@@ -4,14 +4,34 @@ Signature-based packer detection (PEiD-style pattern matching).
 from __future__ import annotations
 
 from pathlib import Path
+import json
+import re
 
 from unpacker.types import DetectionResult, PackerMatch
 
 
 def _load_signatures(signatures_dir: Path) -> list[tuple[str, bytes, int]]:
-    """Load (packer_id, pattern, offset) from data dir. Stub: returns empty."""
-    # TODO: load from data/signatures/ (JSON/YAML or PEiD format)
-    return []
+    """Bounded JSON rule loader. offset=-1 means the mapped PE entry point."""
+    rules = []
+    for path in sorted(signatures_dir.glob("*.json"))[:32]:
+        if path.is_symlink() or path.stat().st_size > 131072:
+            raise ValueError("Signature database file exceeds limits")
+        data = json.loads(path.read_text())
+        if not isinstance(data,list) or len(data)>256:
+            raise ValueError("Signature database must be a bounded list")
+        for rule in data:
+            name,pattern,offset=rule["packer_id"],rule["pattern"],rule["offset"]
+            if not isinstance(name,str) or not re.fullmatch(r"[a-z0-9_-]{1,64}",name):
+                raise ValueError("Invalid signature packer ID")
+            if type(offset) is not int or not -1<=offset<=32*1024*1024:
+                raise ValueError("Invalid signature offset")
+            if not isinstance(pattern,str) or not 2<=len(pattern)<=512:
+                raise ValueError("Invalid signature pattern")
+            raw=bytes.fromhex(pattern)
+            if not raw or len(raw)>128:raise ValueError("Invalid signature pattern size")
+            rules.append((name,raw,offset))
+            if len(rules)>2048:raise ValueError("Too many signatures")
+    return rules
 
 
 class SignatureDetector:
@@ -31,8 +51,7 @@ class SignatureDetector:
                 base = self.signatures_dir
             else:
                 # Prefer repo-style layout (src/unpacker/detector -> ../../data/signatures)
-                repo_data = Path(__file__).resolve().parents[2] / ".." / ".." / "data" / "signatures"
-                base = repo_data if repo_data.exists() else Path.cwd() / "data" / "signatures"
+                base = Path(__file__).resolve().parent / "rules"
             self._signatures = _load_signatures(base)
         return self._signatures
 
@@ -48,6 +67,8 @@ class SignatureDetector:
         except OSError:
             return DetectionResult(is_packed=False)
         for packer_id, pattern, offset in self._get_signatures():
+            if offset == -1 and pe is not None:
+                offset = pe.get_offset_from_rva(pe.OPTIONAL_HEADER.AddressOfEntryPoint)
             if offset >= 0 and offset + len(pattern) <= len(data):
                 if data[offset : offset + len(pattern)] == pattern:
                     matches.append(PackerMatch(packer_id=packer_id, confidence=0.95, method=self.name))

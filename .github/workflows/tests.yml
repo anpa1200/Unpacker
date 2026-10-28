@@ -1,30 +1,64 @@
-name: Tests
-
+name: Reviewed offline release validation
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  validate:
+    if: github.event.repository.private == true
+    # Operator-provided disposable runner and protected environment; never run
+    # untrusted pull-request code on this runner. No policy mutation in this job.
+    runs-on: [self-hosted, linux, x64, unpacker-isolated-ci]
+    environment: unpacker-release-validation
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
-
+        python-version: ["3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
+          persist-credentials: false
+      - name: Require approved immutable runtime inputs
+        env:
+          PY_VERSION: ${{ matrix.python-version }}
         run: |
-          python -m pip install --upgrade pip
-          pip install -e ".[dev]"
-
-      - name: Run tests
-        run: pytest tests/ -v
+          test -x "/opt/unpacker-ci/python${PY_VERSION}/bin/python"
+          test -d /opt/unpacker-ci/wheelhouse
+          test ! -w /opt/unpacker-ci/wheelhouse
+          test -x /opt/unpacker-runtime/bwrap-0.12.0/bin/bwrap
+      - name: Install exact offline validation environment
+        env:
+          PY_VERSION: ${{ matrix.python-version }}
+        run: |
+          "/opt/unpacker-ci/python${PY_VERSION}/bin/python" -m venv "$RUNNER_TEMP/unpacker-validation"
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -m pip install --no-index --no-deps --require-hashes --find-links /opt/unpacker-ci/wheelhouse -r "requirements/release-validation-linux-py${PY_VERSION/./}.lock"
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -m pip check
+      - name: Complete source regressions
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -m pytest tests -q -p no:cacheprovider --junitxml=source-tests.xml
+          "$RUNNER_TEMP/unpacker-validation/bin/python" scripts/check_release_tests.py source-tests.xml 935
+      - name: Check public advisories without dropping owned-build findings
+        env:
+          PY_VERSION: ${{ matrix.python-version }}
+        run: |
+          "$RUNNER_TEMP/unpacker-validation/bin/python" scripts/check_dependency_advisories.py --requirements "requirements/release-validation-linux-py${PY_VERSION/./}.lock" --owned-provenance deployment/owned-dependencies.json --owned-wheelhouse /opt/unpacker-ci/wheelhouse --output dependency-advisories.json
+      - name: Build and verify installed artifact and production boundary
+        env:
+          SOURCE_DATE_EPOCH: "1792886400"
+        run: |
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -m build --no-isolation
+          wheel_path=$(find "$PWD/dist" -maxdepth 1 -name '*.whl' -print)
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -m pip install --no-index --no-deps "$wheel_path"
+          "$RUNNER_TEMP/unpacker-validation/bin/python" -I -B scripts/verify_installed_release.py --wheel "$wheel_path" --source-root "$PWD" --output "$RUNNER_TEMP/installed-evidence" --minimum-tests 935 --sandbox --production-worker --bubblewrap /opt/unpacker-runtime/bwrap-0.12.0/bin/bwrap
+      - uses: actions/upload-artifact@ea165f8d65b6e75b545449e92b4886f43607fa02
+        if: always()
+        with:
+          name: evidence-${{ matrix.python-version }}
+          path: |
+            source-tests.xml
+            dependency-advisories.json
+            ${{ runner.temp }}/installed-evidence/*.json
+            ${{ runner.temp }}/installed-evidence/*.xml
+            ${{ runner.temp }}/installed-evidence/*.txt

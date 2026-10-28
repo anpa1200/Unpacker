@@ -1,0 +1,16 @@
+{
+  "schema": "unpacker.owned-dependencies/1",
+  "dependencies": [
+    {
+      "name": "unicorn-unipacker",
+      "version": "1.0.3b7+unpacker.1",
+      "upstream_version": "1.0.3b7",
+      "wheel_filename": "unicorn_unipacker-1.0.3b7+unpacker.1-py3-none-linux_x86_64.whl",
+      "wheel_sha256": "fc34d9e05bc8da309a5069d7498d324f325f34045ca1a27c69777ceefc63a598",
+      "source_commit": "c5c5b438490e50c3a96b35bfd4b35c2f06ff8144",
+      "source_archive_sha256": "99510635a98080477af47ae09b6fb8a36bd0aa946990e16d9a0b918a3f78956d",
+      "native_member": "unicorn/lib/libunicorn.so",
+      "native_sha256": "46a538bf42814236804f3ed692c930cc64e87f09c2d69bb0b51f5ef546ef28a8"
+    }
+  ]
+}

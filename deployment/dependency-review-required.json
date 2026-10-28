@@ -1,0 +1,63 @@
+{
+  "schema": "unpacker.dependency-review/2",
+  "candidate": "1.2.0rc12",
+  "release_gate": "require_current_locked_hash_advisory_scan",
+  "historical_flags_superseded": true,
+  "historical_evidence": "docs/history/RC9-DEPENDENCY-REVIEW-REQUIRED.json",
+  "dependencies": [
+    {
+      "name": "anyio",
+      "historical_flagged_version": "4.12.1",
+      "locked_version": "4.14.2",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "capstone",
+      "historical_flagged_version": "5.0.7",
+      "locked_version": "5.0.8",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "certifi",
+      "historical_flagged_version": "2026.5.20",
+      "locked_version": "2026.10.19",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "cryptography",
+      "historical_flagged_version": "46.0.5",
+      "locked_version": "50.0.2",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "pyasn1",
+      "historical_flagged_version": "0.6.2",
+      "locked_version": "0.6.4",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "pygments",
+      "historical_flagged_version": "2.19.2",
+      "locked_version": "2.20.0",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "setuptools",
+      "historical_flagged_version": "80.10.2",
+      "locked_version": "84.1.0",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    },
+    {
+      "name": "urllib3",
+      "historical_flagged_version": "2.7.0",
+      "locked_version": "2.8.0",
+      "disposition": "upgraded;current public registry check required;no applicability waiver"
+    }
+  ],
+  "current_evidence": "external RC12 release ledger and dependency-advisories-2026-10-27.json;52 queried public versions,exit0",
+  "limits": [
+    "A zero-finding registry response is not a native/OS security audit",
+    "No legal/owner risk acceptance or DLL redistribution clearance is claimed",
+    "Changing dependency bytes requires fresh provenance and acceptance checks"
+  ]
+}

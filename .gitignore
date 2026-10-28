@@ -65,3 +65,24 @@ htmlcov/
 .env
 .env.local
 *.key
+
+# Local evidence, credentials, specimens and VM/runtime payloads
+.env.*
+*.pem
+*.p12
+*.dll
+*.ldll
+*.exe
+*.whl
+*.qcow2
+*.vdi
+*.vmdk
+*.iso
+*.img
+.vagrant/
+wheelhouse/
+quarantine/
+corpus/
+local-evidence/
+vm-preparation-*/
+vm-runtime-*/

@@ -1,5 +1,9 @@
 # Unpacker: A Practical Guide to Modular Malware Packer Detection and Unpacking
 
+This historical guide describes pre-1.1 behavior and examples. Current invocation,
+result semantics, security boundaries and support limitations are in [HARDENING.md](HARDENING.md).
+Entropy and size changes alone do not prove correct recovery.
+
 **Extract and validate unpacked PE/ELF samples with real examples — and prove it using String Analyzer and File Metadata tools.**
 
 **📖 Published on Medium:** [Unpacker: A Practical Guide to Modular Malware Packer Detection and Unpacking](https://medium.com/@1200km/unpacker-a-practical-guide-to-modular-malware-packer-detection-and-unpacking-cf8ba924f25b)
@@ -231,7 +235,7 @@ The two tools below give you **reproducible, static proof** without running the 
 
 [String Analyzer](https://medium.com/@1200km/a-practical-guide-to-string-analyzer-extract-and-analyze-strings-from-binaries-without-the-875dc74e4868) extracts printable strings, classifies them (URLs, IPs, Windows APIs, DLLs, obfuscation, etc.), and computes **file entropy**. High entropy + few “useful” patterns triggers a **“likely obfuscated/packed”** note — so **before/after** unpacking you should see **entropy drop** and often **more** APIs/DLLs/readable strings.
 
-**Install (if needed):** From `/home/andrey/git_project/String-Analyzer`:
+**Install (if needed):** From `/home/analyst/git_project/String-Analyzer`:
 
 ```bash
 pip install -e .
@@ -291,7 +295,7 @@ File Entropy: 2.38
 Commands used:
 
 ```bash
-cd /home/andrey/git_project/String-Analyzer
+cd /home/analyst/git_project/String-Analyzer
 python3 -m string_analyzer /path/to/NotePad_aspack.exe -o packed_report.txt
 python3 -m string_analyzer /path/to/NotePad_aspack.unpacked.aspack.exe -o unpacked_report.txt
 ```
@@ -308,7 +312,7 @@ python3 -m string_analyzer /path/to/unpacked.exe --ai-prompt -o triage_prompt.md
 
 The [Basic File Information Gathering Script](https://medium.com/@1200km/one-tool-to-rule-them-all-file-metadata-static-analysis-for-malware-analysts-and-soc-teams-c6dba1f5b7de) (`fileinfo.py`) gives you **hashes, magic, file type, entropy, and PE/ELF metadata** (timestamps, entry point, sections, packing heuristic when available). No execution, no decompilation — ideal to **compare packed vs unpacked** in one table or JSON.
 
-**Location:** `/home/andrey/git_project/Basic-File-Information-Gathering-Script/fileinfo.py`
+**Location:** `/home/analyst/git_project/Basic-File-Information-Gathering-Script/fileinfo.py`
 
 **Real example — same ASPack pair:**
 
@@ -341,7 +345,7 @@ Unpacked:
 Commands:
 
 ```bash
-cd /home/andrey/git_project/Basic-File-Information-Gathering-Script
+cd /home/analyst/git_project/Basic-File-Information-Gathering-Script
 python3 fileinfo.py /path/to/NotePad_aspack.exe
 python3 fileinfo.py /path/to/NotePad_aspack.unpacked.aspack.exe
 ```
@@ -383,7 +387,7 @@ You can then diff or compare `report.json` for packed vs unpacked (e.g. section 
 - **Path hints:** Samples in folders (or paths) containing `vmprotect` or `themida` get a path-hint so the right unpacker is chosen even when section/signature detection doesn’t fire.
 - **Multi-layer:** The pipeline can run multiple layers (e.g. VMProtect several times); check the final output and validate that one with String Analyzer and fileinfo.
 - **UPX:** Install system UPX (e.g. `apt install upx-ucl`) for native decompression.
-- **Unipacker:** For ASPack/Themida/VMProtect, `pip install '1200km-unpacker[unipacker]'`; on Python 3.12+ its `unicorn` dependency needs `setuptools<81` for `pkg_resources`, which that extra installs for you.
+- **Unipacker:** Selected PE32 recovery uses the reviewed offline Linux runtime and hashed release wheelhouse. RC11's maintained Unicorn build removes the deprecated packaging requirement. Packer recognition, partial dumps and structural validation do not establish universal recovery or VMProtect devirtualization; check the supported matrix and acceptance evidence.
 
 ---
 

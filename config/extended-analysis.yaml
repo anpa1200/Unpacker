@@ -1,0 +1,8 @@
+# Explicit extended wall-clock profile; all non-time budgets stay bounded.
+orchestrator:
+  timeout_seconds: 180
+  total_timeout_seconds: 210
+  max_output_size_mb: 32
+  max_total_output_size_mb: 32
+  max_output_entries: 4096
+  allow_emulation: true

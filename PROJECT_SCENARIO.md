@@ -1,4 +1,9 @@
+> Historical project scenario. Implemented behavior and current limitations are documented in [README](README.md) and [current status](docs/CURRENT_STATUS.md). Roadmap ideas below are not support claims.
+
 # Unpacker — Malware Packer Detection & Unpacking Tool
+
+Historical research and design notes. The current runtime contract and tested limitations
+are documented in [HARDENING.md](docs/HARDENING.md); proposed capabilities below are not support claims.
 
 ## 1. Research Summary
 
@@ -227,4 +232,4 @@ Unpacker/
 
 ---
 
-*This scenario is the single source of truth for the Unpacker project: modular orchestrator, multi-method detector, and pluggable unpacker modules per packer type.*
+*Historical architecture notes; consult current runtime documentation and test evidence for implemented support.*

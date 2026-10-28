@@ -1,0 +1,51 @@
+{
+  "status": "example_requires_operator_review_not_auto_applied",
+  "candidate": "1.2.0rc12",
+  "platform": "Linux x86_64 CPython3.13",
+  "launcher": "unpacker-worker",
+  "namespace_runtime": {
+    "minimum": "0.12.0",
+    "backport_policy": "Only a separately verified distribution backport may be added to the code policy; no CLI bypass",
+    "prepared_binary_sha256": "c57d7d2596e97b24d4450d88e12e5e5d3a67fff7ad300689cb3946a3b8e9b712",
+    "prepared_binary": "approved local0.12.0 identity;each new target still requires operator acceptance;this file applies no settings",
+    "historical_system_launcher": "0.9.0-1ubuntu0.3 was blocked in the earlier review;not the later approved task-local runtime"
+  },
+  "cgroup_v2": {
+    "memory.max": 2147483648,
+    "memory.swap.max": 0,
+    "pids.max": 32,
+    "cpu.max": "100000 100000"
+  },
+  "profiles": {
+    "standard": {
+      "decode_seconds": 60,
+      "total_job_seconds": 90,
+      "namespace_watchdog_seconds": 95,
+      "service_seconds": 110,
+      "client_seconds": 120,
+      "recommended_external_supervisor_seconds": 135
+    },
+    "extended": {
+      "decode_seconds": 180,
+      "total_job_seconds": 210,
+      "namespace_watchdog_seconds": 215,
+      "service_seconds": 230,
+      "client_seconds": 240,
+      "recommended_external_supervisor_seconds": 255
+    }
+  },
+  "arguments": [
+    "--max-total-output-mb",
+    "32",
+    "--max-output-entries",
+    "4096"
+  ],
+  "guest_emulation": "off unless explicitly selected",
+  "network": "namespace disabled",
+  "credentials": "none in controller or guest",
+  "reference": "absent from analysis; separately isolated validation only",
+  "retention": "operator-owned quarantine TTL and access policy; artifacts treated as untrusted",
+  "required_outer_boundary": "dedicated disposable analyst worker; operator review and acceptance pending",
+  "host_changes_applied": false,
+  "current_readiness": "See docs/CURRENT_STATUS.md;GDS unresolved;experimental VM has core benign proof only"
+}

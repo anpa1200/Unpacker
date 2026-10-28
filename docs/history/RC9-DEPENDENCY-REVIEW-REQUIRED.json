@@ -1,0 +1,80 @@
+{
+  "release_gate": "blocked",
+  "review_only": true,
+  "dependencies": [
+    {
+      "name": "anyio",
+      "current_version": "4.12.1",
+      "registry_reported_fixed_versions": [
+        "4.14.2"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "capstone",
+      "current_version": "5.0.7",
+      "registry_reported_fixed_versions": [
+        "5.0.8"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "certifi",
+      "current_version": "2026.5.20",
+      "registry_reported_fixed_versions": [
+        "2026.10.19"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "cryptography",
+      "current_version": "46.0.5",
+      "registry_reported_fixed_versions": [
+        "46.0.6",
+        "46.0.7",
+        "48.0.1",
+        "49.0.0",
+        "50.0.0"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "pyasn1",
+      "current_version": "0.6.2",
+      "registry_reported_fixed_versions": [
+        "0.6.3",
+        "0.6.4"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "pygments",
+      "current_version": "2.19.2",
+      "registry_reported_fixed_versions": [
+        "2.20.0"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "setuptools",
+      "current_version": "80.10.2",
+      "registry_reported_fixed_versions": [
+        "83.0.0",
+        "84.1.0"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    },
+    {
+      "name": "urllib3",
+      "current_version": "2.7.0",
+      "registry_reported_fixed_versions": [
+        "2.8.0"
+      ],
+      "status": "requires applicability and compatibility review; no upgrade or waiver applied"
+    }
+  ],
+  "important_scope_notes": [
+    "setuptools advisories describe macOS/Windows paths, not demonstrated Linux exposure",
+    "Capstone maintainer advisory version/build scope differs from registry flag; reconcile before claiming applicability"
+  ]
+}

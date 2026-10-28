@@ -4,7 +4,7 @@ Themida unpacker: uses Unipacker (emulation-based) when available.
 Themida is not in Unipacker's known packer list; Unipacker will treat it as unknown
 and emulate from the entry point until section hopping or write+execute is detected, then dump.
 Requires: pip install '1200km-unpacker[unipacker]' (installs unipacker and a
-compatible setuptools for pkg_resources on Python 3.12+).
+the reviewed Linux runtime from the release bundle).
 """
 from __future__ import annotations
 

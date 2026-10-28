@@ -1,13 +1,14 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+requires = ["setuptools>=84.1.0,<85"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "1200km-unpacker"
-version = "1.0.0"
+version = "1.2.0rc12"
 description = "Modular malware packer detection and unpacking tool"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
     { name = "Andrey Pautov", email = "1200km@gmail.com" },
@@ -20,11 +21,11 @@ dependencies = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Security",
 ]
 
@@ -37,14 +38,22 @@ Issues = "https://github.com/anpa1200/Unpacker/issues"
 [project.optional-dependencies]
 dev = ["pytest", "pytest-cov"]
 emulation = ["qiling>=1.4.5"]
-# ASPack / Themida (PE32) unpacking via Unipacker. unipacker's own dependency
-# chain (unicorn) still imports distutils/pkg_resources, both removed or being
-# phased out of Python 3.12+ and newer setuptools, so a compatible setuptools
-# is pinned alongside it rather than left to the user to discover.
-unipacker = ["unipacker", "setuptools<81"]
+# Reviewed offline Linux runtime supplied with the release bundle. The local
+# version identifies the maintained binding/core build; it is not on PyPI.
+unipacker = ["unipacker==1.0.8", "unicorn-unipacker==1.0.3b7+unpacker.1"]
+acquisition = ["requests>=2.28", "pyzipper>=0.3.5"]
+ai = ["pydantic>=2.7,<3", "python-dotenv>=1,<2"]
+config = ["PyYAML>=6,<7"]
+crypto = ["cryptography>=43"]
+ai-openai = ["pydantic>=2.7,<3", "python-dotenv>=1,<2", "openai>=1.50,<3"]
+ai-claude = ["pydantic>=2.7,<3", "python-dotenv>=1,<2", "anthropic>=0.40,<1"]
+ai-gemini = ["pydantic>=2.7,<3", "python-dotenv>=1,<2", "google-genai>=1.20,<3"]
 
 [project.scripts]
 unpacker = "unpacker.cli:main"
+unpacker-ai = "unpacker.ai.cli:main"
+unpacker-sandbox = "unpacker.sandbox_cli:main"
+unpacker-worker = "unpacker.worker_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

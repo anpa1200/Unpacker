@@ -36,7 +36,7 @@ class HeuristicsDetector:
                 if hasattr(pe, "DIRECTORY_ENTRY_IMPORT") and pe.DIRECTORY_ENTRY_IMPORT:
                     for entry in pe.DIRECTORY_ENTRY_IMPORT:
                         num_imports += len(entry.imports) if hasattr(entry, "imports") else 0
-                if pe.sections:
+                if len(pe.sections) > 1:
                     last = pe.sections[-1]
                     last_start = last.VirtualAddress
                     last_end = last_start + (last.Misc_VirtualSize or last.SizeOfRawData)

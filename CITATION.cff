@@ -4,7 +4,7 @@ title: "Unpacker"
 authors:
   - family-names: "Pautov"
     given-names: "Andrey"
-    orcid: "[user: confirm or remove]"
 url: "https://github.com/anpa1200/Unpacker"
 repository-code: "https://github.com/anpa1200/Unpacker"
 license: "MIT"
+version: "1.2.0rc12"
